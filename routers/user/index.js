@@ -1,14 +1,15 @@
-const userRouter = require("express").Router()
-const userController = require("./user.controller")
+const userRouter = require("express").Router();
+const userController = require("./user.controller");
 
 /**
  * @swagger
  * paths:
- *  /api/user/users:
+ *  /login/signUp:
  *    get:
- *      summary: "유저 데이터 전체조회"
- *      description: "서버에 데이터를 보내지 않고 Get방식으로 요청"
+ *      summary: "회원 가입"
+ *      description: "서버에 데이터를 보내고 Post방식으로 요청"
  *      tags: [Users]
+ *
  *      responses:
  *        "200":
  *          description: 전체 유저 정보
@@ -23,12 +24,12 @@ const userController = require("./user.controller")
  *                      type: object
  *                      example:
  *                          [
- *                            { "id": 1, "name": "유저1" },
+ *                            { "userId": "jake", "password": "1234",  },
  *                            { "id": 2, "name": "유저2" },
  *                            { "id": 3, "name": "유저3" },
  *                          ]
  */
-userRouter.get("/users", userController.getUsers)
+userRouter.get("/users", userController.getUsers);
 
 /**
  * @swagger
@@ -58,7 +59,7 @@ userRouter.get("/users", userController.getUsers)
  *                  type: object
  *                  example: [{ "id": 1, "name": "유저1" }]
  */
-userRouter.get("/user", userController.findOneUser1)
+userRouter.get("/user", userController.findOneUser1);
 
 /**
  * @swagger
@@ -88,15 +89,15 @@ userRouter.get("/user", userController.findOneUser1)
  *                  type: object
  *                  example: [{ "id": 1, "name": "유저1" }]
  */
-userRouter.get("/:user_id", userController.findOneUser2)
+userRouter.get("/:user_id", userController.findOneUser2);
 
 /**
  * @swagger
  *
- * /api/user/add:
+ * /login/signUp:
  *  post:
- *    summary: "유저 등록"
- *    description: "POST 방식으로 유저를 등록한다."
+ *    summary: "회원 가입"
+ *    description: "POST 방식으로 회원를 등록한다."
  *    tags: [Users]
  *    requestBody:
  *      description: 사용자가 서버로 전달하는 값에 따라 결과 값은 다릅니다. (유저 등록)
@@ -106,14 +107,108 @@ userRouter.get("/:user_id", userController.findOneUser2)
  *          schema:
  *            type: object
  *            properties:
- *              id:
- *                type: integer
- *                description: "유저 고유아이디"
- *              name:
+ *              userId:
  *                type: string
- *                description: "유저 이름"
+ *                description: "iamuser"
+ *              password:
+ *                type: string
+ *                description: "1234"
+ *              passwordCheck:
+ *                type: string
+ *                description: "1234"
+ *              userNickName:
+ *                type: string
+ *                description: "꿀렁"
+ *              userAge:
+ *                type: string
+ *                description: "20대"
  */
-userRouter.post("/add", userController.createUser)
+userRouter.post("/add", userController.createUser);
+
+/**
+ * @swagger
+ *
+ * /login/idCheck:
+ *  post:
+ *    summary: "아이디 중복 확인"
+ *    description: "POST 방식으로 회원 아이디 중복을 확인한다."
+ *    tags: [Users]
+ *    requestBody:
+ *      description: 사용자가 서버로 전달하는 값에 따라 결과 값은 다릅니다. (유저 등록)
+ *      required: true
+ *      content:
+ *        application/x-www-form-urlencoded:
+ *          schema:
+ *            type: object
+ *            properties:
+ *              userId:
+ *                type: string
+ *                description: "iamuser"
+ *    responses:
+ *      "200":
+ *        description: 아이디가 중복되지 않으면 true, 중복되면 false 반환한다. (유저 아이디 조회)
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                result:
+ *                  type: boolean
+ *
+ */
+userRouter.post("/add", userController.createUser);
+
+/**
+ * @swagger
+ *
+ * /login/reqLogin:
+ *  post:
+ *    summary: "로그인 요청"
+ *    description: "POST 방식으로 등록된 회원의 로그인을 요청한다."
+ *    tags: [Users]
+ *    requestBody:
+ *      description: 로그인의 성공/ 실패 여부에 따라 res 값을 다르게 반환한다.
+ *      required: true
+ *      content:
+ *        application/x-www-form-urlencoded:
+ *          schema:
+ *            type: object
+ *            properties:
+ *              userId:
+ *                type: string
+ *                description: "iamuser"
+ *              password:
+ *                type: string
+ *                description: "1234"
+ *    responses:
+ *      "200":
+ *        description: 아이디가 중복되지 않으면 true, 중복되면 false 반환한다. (유저 아이디 조회)
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                result:
+ *                  type: string
+ *                  description: "success"
+ *                token:
+ *                  type: object
+ *                  description: token
+ *     "400":
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                result:
+ *                  type: string
+ *                  description: "fail"
+ *                msg:
+ *                  type: string
+ *                  description: "실패했습니다"
+ *
+ */
+userRouter.post("/add", userController.createUser);
 
 /**
  * @swagger
@@ -155,7 +250,7 @@ userRouter.post("/add", userController.createUser)
  *                      { "id": 3, "name": "유저3" },
  *                    ]
  */
-userRouter.put("/update", userController.setUsers)
+userRouter.put("/update", userController.setUsers);
 
 /**
  * @swagger
@@ -201,7 +296,7 @@ userRouter.put("/update", userController.setUsers)
  *                      { "id": 3, "name": "유저3" },
  *                    ]
  */
-userRouter.patch("/update/:user_id", userController.setUser)
+userRouter.patch("/update/:user_id", userController.setUser);
 
 /**
  * @swagger
@@ -236,6 +331,6 @@ userRouter.patch("/update/:user_id", userController.setUser)
  *                      { "id": 3, "name": "유저3" },
  *                    ]
  */
-userRouter.delete("/delete", userController.delUser)
+userRouter.delete("/delete", userController.delUser);
 
-module.exports = userRouter
+module.exports = userRouter;

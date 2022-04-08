@@ -7,6 +7,6 @@ const user = require("./user");
  *   name: Users
  *   description: 유저 추가 수정 삭제 조회
  */
-router.use("/user", user);
+router.use("/Users", user);
 
 module.exports = router;
