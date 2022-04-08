@@ -1,7 +1,12 @@
 {
   "dependencies": {
     "express": "^4.17.3",
+    "http-server": "^14.1.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.2.10"
+  },
+  "devDependencies": {
+    "swagger-jsdoc": "^6.2.0",
+    "swagger-ui-express": "^4.3.0"
   }
 }
