@@ -22,7 +22,7 @@
             <div class="button-wrap">
                 <div id="btn"></div>
                 <button type="button" class="togglebtn" onclick="login()">LOG IN</button>
-                <button type="button" class="togglebtn" onclick="register()">REGISTER</button>
+                <button type="button" class="togglebtn" onclick="sign_up()">REGISTER</button>
             </div>
 
             <div id="login" action="" class="input-group">
@@ -38,6 +38,7 @@
                     required>
                 <input id="inputPassword2" type="password" class="input-field" placeholder="Enter your Password Again"
                     required>
+                <input id="userAge" type="userAge" class="input-field" placeholder="Enter your Age" required>
 
                 <input type="checkbox" class="checkbox"><span>Terms and conditions</span>
                 <button onclick="sign_up()" class="submit">REGISTER</button>
@@ -62,25 +63,30 @@
             z.style.left = "110px";
         }
         function sign_up() {
-            const nickname = $("#inputNickname").val();
-            const email = $("#inputEmail").val();
-            const password1 = $("#inputPassword1").val();
-            const password2 = $("#inputPassword2").val();
+            const userNickname = $("#inputNickname").val();
+            const userId = $("#inputEmail").val();
+            const password = $("#inputPassword1").val();
+            const passwordCheck = $("#inputPassword2").val();
+            const userAge = $("#userAge").val();
 
-            if (!nickname || !email || !password1 || !password2) {
+
+            if (!userNickname || !userId || !password || !passwordCheck || !passwordCheck) {
                 alert("값을 입력해주세요!")
             }
-            // console.log(nickname, email, password1, password2)
+            console.log(typeof (password, userAge))
             $.ajax({
                 type: "POST",
-                url: "/users",
-                data: {
-                    nickName: nickname,
-                    email: email,
-                    password: password1,
-                    passwordConfirm: password2,
-                },
+                url: "/signUp",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    userNickname: $("#inputNickname").val(),
+                    userId: $("#inputEmail").val(),
+                    password: $("#inputPassword1").val(),
+                    passwordCheck: $("#inputPassword2").val(),
+                    userAge: $("#userAge").val(),
+                }),
                 success: function (response) {
+                    console.log("post 입니다.", response)
                     alert("회원가입을 축하드립니다!");
                     window.location.replace("/");
                 },
@@ -88,7 +94,14 @@
                     alert(error.responseJSON.errorMessage);
                 },
             });
+
         }
+
+
+
+
+
+
         function moveToMain() {
             const nickName = $("#enterNickname").val();
             const password = $("#enterPassword").val();
