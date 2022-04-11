@@ -27,7 +27,7 @@ router.post("/signUp", async (req, res) => {
   });
   if (existUser.length) {
     res.status(400).send({
-      errorMessage: "이미 등록된 아이디입니다.",
+      errorMessage: "이미 등록된 아이디 또는 닉네임입니다.",
     });
     return;
   }
@@ -37,9 +37,9 @@ router.post("/signUp", async (req, res) => {
   res.status(201).send({});
 });
 
-router.post("/idCheck", async (req, res) => {
-  // const { userId, userNickname } = req.body;
-});
+// router.post("/idCheck", async (req, res) => {
+//   // const { userId, userNickname } = req.body;
+// });
 
 router.post("/reqLogin", async (req, res) => {
   const { userId, password } = req.body;
@@ -52,12 +52,13 @@ router.post("/reqLogin", async (req, res) => {
     return;
   }
 
-  const token = jwt.sign({ test: true }, "my-secret-key");
-
+  const token = jwt.sign({ userId: user.userId }, "my-secret-key");
   res.send({ token });
 });
 
-router.get("/isLogin", authMiddleware, (req, res) => {});
+router.get("/isLogin", authMiddleware, (req, res) => {
+  console.log(res.locals);
+});
 
 router.get("/getUser", authMiddleware, (req, res) => {
   const { user } = res.locals;

@@ -28,6 +28,11 @@ app.get("/logins", (req, res) => {
   res.sendFile(__dirname + "/templates/index.html");
 });
 
+app.get("/main", (req, res) => {
+  console.log("로그인 화면 입니다.");
+  res.sendFile(__dirname + "/templates/main.html");
+});
+
 //서버 연결
 app.listen(port, () => {
   console.log(port, "번으로 서버가 켜졌어요!");

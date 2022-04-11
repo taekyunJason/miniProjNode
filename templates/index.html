@@ -21,7 +21,7 @@
         <div class="form-wrap">
             <div class="button-wrap">
                 <div id="btn"></div>
-                <button type="button" class="togglebtn" onclick="login()">LOG IN</button>
+                <button type="button" class="togglebtn" onclick="moveToMain()">LOG IN</button>
                 <button type="button" class="togglebtn" onclick="sign_up()">REGISTER</button>
             </div>
 
@@ -73,7 +73,7 @@
             if (!userNickname || !userId || !password || !passwordCheck || !passwordCheck) {
                 alert("값을 입력해주세요!")
             }
-            console.log(typeof (password, userAge))
+
             $.ajax({
                 type: "POST",
                 url: "/signUp",
@@ -86,7 +86,6 @@
                     userAge: $("#userAge").val(),
                 }),
                 success: function (response) {
-                    console.log("post 입니다.", response)
                     alert("회원가입을 축하드립니다!");
                     window.location.replace("/");
                 },
@@ -103,14 +102,14 @@
 
 
         function moveToMain() {
-            const nickName = $("#enterNickname").val();
+            const userId = $("#enterNickname").val();
             const password = $("#enterPassword").val();
 
             $.ajax({
                 type: "POST",
-                url: "/auth",
+                url: "/reqLogin",
                 data: {
-                    nickName: nickName,
+                    userId: userId,
                     password: password,
                 },
                 success: function (response) {
@@ -121,7 +120,7 @@
 
                     $.ajax({
                         type: "GET",
-                        url: "/users/me",
+                        url: "/isLogin",
                         data: {},
                         success: function (response) {
                             console.log("사용자인증 미들웨어가 실행되었습니다.")
