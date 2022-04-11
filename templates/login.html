@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>로그인 / 회원가입</title>
+    <link rel="stylesheet" href="./style.css" type="text/css" />
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+</head>
+
+<body>
+
+    <div class="wrap">
+        <div class="form-wrap">
+            <div class="button-wrap">
+                <div id="btn"></div>
+                <button type="button" class="togglebtn" onclick="login()">LOG IN</button>
+                <button type="button" class="togglebtn" onclick="register()">REGISTER</button>
+            </div>
+
+            <div id="login" action="" class="input-group">
+                <input id="enterNickname" type="text" class="input-field" placeholder="Enter Nickname" required>
+                <input id="enterPassword" type="password" class="input-field" placeholder="Enter Password" required>
+                <input type="checkbox" class="checkbox"><span>Remember Password</span>
+                <button onclick="moveToMain()" class="submit">Login</button>
+            </div>
+            <div id="register" action="" class="input-group">
+                <input id="inputNickname" type="text" class="input-field" placeholder="Enter your Nickname" required>
+                <input id="inputEmail" type="email" class="input-field" placeholder="Enter your Email" required>
+                <input id="inputPassword1" type="password" class="input-field" placeholder="Enter your Password"
+                    required>
+                <input id="inputPassword2" type="password" class="input-field" placeholder="Enter your Password Again"
+                    required>
+
+                <input type="checkbox" class="checkbox"><span>Terms and conditions</span>
+                <button onclick="sign_up()" class="submit">REGISTER</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        var x = document.getElementById("login");
+        var y = document.getElementById("register");
+        var z = document.getElementById("btn");
+
+
+        function login() {
+            x.style.left = "50px";
+            y.style.left = "450px";
+            z.style.left = "0";
+        }
+
+        function register() {
+            x.style.left = "-400px";
+            y.style.left = "50px";
+            z.style.left = "110px";
+        }
+        function sign_up() {
+            const nickname = $("#inputNickname").val();
+            const email = $("#inputEmail").val();
+            const password1 = $("#inputPassword1").val();
+            const password2 = $("#inputPassword2").val();
+
+            if (!nickname || !email || !password1 || !password2) {
+                alert("값을 입력해주세요!")
+            }
+            // console.log(nickname, email, password1, password2)
+            $.ajax({
+                type: "POST",
+                url: "/users",
+                data: {
+                    nickName: nickname,
+                    email: email,
+                    password: password1,
+                    passwordConfirm: password2,
+                },
+                success: function (response) {
+                    alert("회원가입을 축하드립니다!");
+                    window.location.replace("/");
+                },
+                error: function (error) {
+                    alert(error.responseJSON.errorMessage);
+                },
+            });
+        }
+        function moveToMain() {
+            const nickName = $("#enterNickname").val();
+            const password = $("#enterPassword").val();
+
+            $.ajax({
+                type: "POST",
+                url: "/auth",
+                data: {
+                    nickName: nickName,
+                    password: password,
+                },
+                success: function (response) {
+                    console.log("로그인에 성공했습니다")
+                    alert("환영합니다!")
+                    localStorage.setItem("token", response.token);
+                    window.location.replace("/main");
+
+                    $.ajax({
+                        type: "GET",
+                        url: "/users/me",
+                        data: {},
+                        success: function (response) {
+                            console.log("사용자인증 미들웨어가 실행되었습니다.")
+                        }
+                    })
+                },
+                error: function (error) {
+                    alert(error.responseJSON.errorMessage);
+                },
+            });
+        }
+    </script>
+</body>
+
+</html>
