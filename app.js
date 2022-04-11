@@ -11,9 +11,12 @@ app.use(express.urlencoded({ extended: true }))
 
 // app.use("/api", api)
 
-const { swaggerUi, specs } = require("./swagger/swagger")
+const router = require("./routes/posts");
+app.use("/posts", router);
 
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs))
+const connect = require("./schemas");
+connect();
+
 
 /**
  * 파라미터 변수 뜻
@@ -31,4 +34,4 @@ app.get("/", (req, res) => {
 })
 
 // http listen port 생성 서버 실행
-app.listen(3000, () => console.log("개발이 취미인 남자 :)"))
+app.listen(3300, () => console.log("3300포트로 연결 성공"))

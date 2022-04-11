@@ -2,7 +2,8 @@
   "dependencies": {
     "express": "^4.17.3",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.2.10"
+    "mongoose": "^6.2.10",
+    "nodemon": "^2.0.15"
   },
   "devDependencies": {
     "swagger-jsdoc": "^6.2.0",
