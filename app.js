@@ -23,7 +23,7 @@ app.use(requestMiddleware);
 //라우터 연결
 app.use("/", [loginRouter]);
 
-app.get("/logins", (req, res) => {
+app.get("/", (req, res) => {
   console.log("로그인 화면 입니다.");
   res.sendFile(__dirname + "/templates/index.html");
 });
