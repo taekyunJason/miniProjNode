@@ -80,12 +80,13 @@ router.post("/posts/etc/add", async(req, res) => {
 
 // 포스팅 목록 조회
 router.get("/posts/:category", async (req, res) => {
-  // const category = req.params.category;
-  const { category } = req.params;
-  const Posts = await Posting.find({category: category}).exec();
-  console.log(Posts)
-  // const postsGroup = { category : category };
-	// const Posts = await Posting.find(postsGroup).sort({date: -1});
+  const category = req.params.category;
+  const postsGroup = { category : category };
+	const Posts = await Posting.find(postsGroup).sort({createdAt: -1});
+  // const { category } = req.params;
+  // const Posts = await Posting.find({category: category}).exec();
+  // console.log(Posts)
+  
 	res.json({ Posts });
   });
 
@@ -126,7 +127,6 @@ router.post("/posts/edit/:postId", async (req, res) => {
     return;
   }
   else{ res.json({ result: "fail" });
-
   }
 });
 
