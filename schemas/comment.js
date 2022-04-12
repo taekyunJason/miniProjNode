@@ -22,7 +22,7 @@ const CommentSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  craetedAt: {
+  createdAt: {
     type: String,
     required: true
   },

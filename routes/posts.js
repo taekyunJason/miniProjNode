@@ -5,6 +5,7 @@ const Posting = require("../schemas/posting")
 const User = require("../schemas/user");
 const jwt = require("jsonwebtoken");
 const { response } = require("express");
+const moment = require("moment");
 
 
 
@@ -22,8 +23,7 @@ router.post("/posts/chair/add", async(req, res) => {
   let { itemName, content, imageUrl, category, userId, userNickname, userAge } = req.body;
   let postNumber = Posting.find({});
   let postId = await postNumber.countDocuments() + 1
-  let today = new Date
-  const createdAt = today.toLocaleString()
+  const createdAt = moment().format("YYYY-MM-DD HH:mm:ss")
   let likeCnt = 0
   let commentCnt = 0
   const createPosting = await Posting.create({ postId, itemName, userId, userNickname, userAge, content, createdAt, imageUrl, category, likeCnt, commentCnt});
@@ -35,8 +35,7 @@ router.post("/posts/desk/add", async(req, res) => {
   let {itemName, content, imageUrl, category, userId, userNickname, userAge } = req.body;
   let postNumber = Posting.find({});
   let postId = await postNumber.countDocuments() + 1
-  let today = new Date
-  const createdAt = today.toLocaleString()
+  const createdAt = moment().format("YYYY-MM-DD HH:mm:ss")
   let likeCnt = 0
   let commentCnt = 0
     await Posting.create({ postId, itemName, userId, userNickname, userAge, content, createdAt, imageUrl, category, likeCnt, commentCnt});
@@ -47,8 +46,7 @@ router.post("/posts/elecItem/add", async(req, res) => {
   let {itemName, content, imageUrl, category, userId, userNickname, userAge } = req.body;
   let postNumber = Posting.find({});
   let postId = await postNumber.countDocuments() + 1
-  let today = new Date
-  const createdAt = today.toLocaleString()
+  const createdAt = moment().format("YYYY-MM-DD HH:mm:ss")
   let likeCnt = 0
   let commentCnt = 0
     await Posting.create({ postId, itemName, userId, userNickname, userAge, content, createdAt, imageUrl, category, likeCnt, commentCnt});
@@ -59,8 +57,7 @@ router.post("/posts/healthCare/add", async(req, res) => {
   let {itemName, content, imageUrl, category, userId, userNickname, userAge } = req.body;
   let postNumber = Posting.find({});
   let postId = await postNumber.countDocuments() + 1
-  let today = new Date
-  const createdAt = today.toLocaleString()
+  const createdAt = moment().format("YYYY-MM-DD HH:mm:ss")
   let likeCnt = 0
   let commentCnt = 0
     await Posting.create({ postId, itemName, userId, userNickname, userAge, content, createdAt, imageUrl, category, likeCnt, commentCnt});
@@ -71,8 +68,7 @@ router.post("/posts/etc/add", async(req, res) => {
   let { itemName, content, imageUrl, category, userId, userNickname, userAge } = req.body;
   let postNumber = Posting.find({});
   let postId = await postNumber.countDocuments() + 1
-  let today = new Date
-  const createdAt = today.toLocaleString()
+  const createdAt = moment().format("YYYY-MM-DD HH:mm:ss")
   let likeCnt = 0
   let commentCnt = 0
     await Posting.create({ postId, itemName, userId, userNickname, userAge, content, createdAt, imageUrl, category, likeCnt, commentCnt});
