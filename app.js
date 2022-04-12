@@ -7,7 +7,7 @@ const connect = require("./schemas/index");
 const app = express();
 const express = require('express');
 
-const port = 3300;
+const port = 3000;
 
 connect();
 
