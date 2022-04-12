@@ -24,7 +24,7 @@ const loginRouter = require("./routes/logins");
 app.use(express.json());
 app.use(requestMiddleware);
 app.use(express.urlencoded({extended: false}));
-app.use(express.static("public"));
+app.use(express.static("templates"));
 
 const connect = require("./schemas");
 connect();
