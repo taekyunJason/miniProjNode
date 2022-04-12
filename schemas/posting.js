@@ -5,14 +5,22 @@ const PostingSchema = new mongoose.Schema({
         type: String,
         required: true,
       }, 
+      userId: {
+        type: String,
+        required: true
+      },
+      userNickname: {
+        type: String,
+        required: true
+      },
+      userAge: {
+        type: String,
+        required: true
+      },
       itemName: {
         type: String,
         required: true, 
-      }, 
-      writer: {
-        type: String,
-        required: true, 
-      }, 
+      },
       content: {
         type: String,
         required: true

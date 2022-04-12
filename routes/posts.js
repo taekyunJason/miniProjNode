@@ -26,44 +26,44 @@ router.post("/posts/chair/add", async(req, res) => {
   const createdAt = today.toLocaleString()
   let likeCnt = 0
   let commentCnt = 0
-  const createPosting = await Posting.create({ postId,itemName,userId,userNickname,userAge,content,createdAt,imageUrl,category,likeCnt,commentCnt});
+  const createPosting = await Posting.create({ postId, itemName, userId, userNickname, userAge, content, createdAt, imageUrl, category, likeCnt, commentCnt});
   res.json({createPosting})
   });
 
   //포스팅 입력값 저장-desk
 router.post("/posts/desk/add", async(req, res) => {
-  let { itemName, content, imageUrl, category, userId, userNickname, userAge } = req.body;
+  let {itemName, content, imageUrl, category, userId, userNickname, userAge } = req.body;
   let postNumber = Posting.find({});
   let postId = await postNumber.countDocuments() + 1
   let today = new Date
   const createdAt = today.toLocaleString()
   let likeCnt = 0
   let commentCnt = 0
-    await Posting.create({ postId,itemName,userId,userNickname,userAge,content,createdAt,imageUrl,category,likeCnt,commentCnt});
+    await Posting.create({ postId, itemName, userId, userNickname, userAge, content, createdAt, imageUrl, category, likeCnt, commentCnt});
   });
  
   //포스팅 입력값 저장-elecItem
 router.post("/posts/elecItem/add", async(req, res) => {
-  let { itemName, content, imageUrl, category, userId, userNickname, userAge } = req.body;
+  let {itemName, content, imageUrl, category, userId, userNickname, userAge } = req.body;
   let postNumber = Posting.find({});
   let postId = await postNumber.countDocuments() + 1
   let today = new Date
   const createdAt = today.toLocaleString()
   let likeCnt = 0
   let commentCnt = 0
-    await Posting.create({ postId,itemName,userId,userNickname,userAge,content,createdAt,imageUrl,category,likeCnt,commentCnt});
+    await Posting.create({ postId, itemName, userId, userNickname, userAge, content, createdAt, imageUrl, category, likeCnt, commentCnt});
   });
 
     //포스팅 입력값 저장-healthCare
 router.post("/posts/healthCare/add", async(req, res) => {
-  let { itemName, content, imageUrl, category, userId, userNickname, userAge } = req.body;
+  let {itemName, content, imageUrl, category, userId, userNickname, userAge } = req.body;
   let postNumber = Posting.find({});
   let postId = await postNumber.countDocuments() + 1
   let today = new Date
   const createdAt = today.toLocaleString()
   let likeCnt = 0
   let commentCnt = 0
-    await Posting.create({ postId,itemName,userId,userNickname,userAge,content,createdAt,imageUrl,category,likeCnt,commentCnt});
+    await Posting.create({ postId, itemName, userId, userNickname, userAge, content, createdAt, imageUrl, category, likeCnt, commentCnt});
   });
 
   //포스팅 입력값 저장-etc
@@ -75,7 +75,7 @@ router.post("/posts/etc/add", async(req, res) => {
   const createdAt = today.toLocaleString()
   let likeCnt = 0
   let commentCnt = 0
-    await Posting.create({ postId,itemName,userId,userNickname,userAge,content,createdAt,imageUrl,category,likeCnt,commentCnt});
+    await Posting.create({ postId, itemName, userId, userNickname, userAge, content, createdAt, imageUrl, category, likeCnt, commentCnt});
   });
 
 // 포스팅 목록 조회
@@ -159,16 +159,16 @@ router.post("/posts/editdata/:postId", async(req, res) => {
 //내가 작성한 게시글 조회  authMiddleware, OK
 router.get("/profile/:userId", (req, res) => {
     console.log("가나다라")
-    // const post  = await Posting.find({});
+    const post  = await Posting.find({});
     // res.send("this is post page")
-    res.json({ postList })
+    res.json({ post })
 });
 
 
 //가장 좋아요가 많은 5개 게시글 OK
 router.get("/mostLikePost", async (req, res) => {
-    // const postAmount = await Posting.find({});
-    const postAmount = postList
+    const postAmount = await Posting.find({});
+    // const postAmount = postList
     // console.log(postAmount)
 
     if(postAmount.length){
