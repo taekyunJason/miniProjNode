@@ -74,7 +74,7 @@ router.post("/etc/add", async(req, res) => {
 router.get("/:category", async (req, res) => {
   const category = req.params.category;
   const postsGroup = { category : category };
-	const Posts = await Posting.find(postsGroup).sort({date: -1});
+	const Posts = await Posting.find(postsGroup).sort({createdAt: -1});
 	res.json({ Posts });
   });
 
@@ -110,7 +110,6 @@ router.post("/edit/:postId", async (req, res) => {
   const existsPosting = await Posting.findOne({ postId });
   const DBpassword = existsPosting.password;
   if (password == DBpassword) {
-    await Posting.deleteOne({ postId });
     res.json({ result: "success" });
     return;
   }

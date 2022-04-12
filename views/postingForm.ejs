@@ -32,33 +32,33 @@ $(document).ready(function() {
     let userPWKeyValue = "1234"
     localStorage.setItem("userId",userIdKeyValue);
     localStorage.setItem("password",userPWKeyValue);
-    console.log(localStorage.getItem("userId"),localStorage.setItem("password"))
+    console.log(localStorage.getItem("userId",userIdKeyValue))
         });
 
-//  function save() {
-//             $.ajax({
-//                 type: 'POST',
-//                 url:"/posts/chair/add",
-//                 contentType:"application/json",
-//                 data:JSON.stringify({
-//                     itemName: $('#itemName').val(),
-//                     content: $('#content').val(),
-//                     imageUrl: $('#imageUrl').val(),
-//                     category: $('#category').val(),
-//                     writer: localStorage.getItem("userId")
-//                     }),
+ function save() {
+            $.ajax({
+                type: 'POST',
+                url:"/posts/chair/add",
+                contentType:"application/json",
+                data:JSON.stringify({
+                    itemName: $('#itemName').val(),
+                    content: $('#content').val(),
+                    imageUrl: $('#imageUrl').val(),
+                    category: $('#category').val(),
+                    writer: localStorage.getItem("userId")
+                    }),
                     
-//                 success: (response) => {
-//                     alert("데이터 전송이 완료되었습니다!");
-//                 }
+                success: (response) => {
+                    alert("데이터 전송이 완료되었습니다!");
+                }
                 
-//             });
-//             console.log(
-//                     $('#itemName').val(),
-//                     $('#content').val(),
-//                     $('#imageUrl').val(),
-//                     $('#category').val()) 
-//         }
+            });
+            console.log(
+                    $('#itemName').val(),
+                    $('#content').val(),
+                    $('#imageUrl').val(),
+                    $('#category').val()) 
+        }
 
 function close_box() {
     console.log(window.document);
