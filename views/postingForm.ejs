@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- 제이쿼리 임포트 --> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+          <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+          crossorigin="anonymous"></script>
+          <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Serif+KR:wght@500&display=swap"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Serif+KR:wght@500&family=Sunflower:wght@500&display=swap"
+          rel="stylesheet">      
+
+
+</head>
+<style>
+
+        
+
+
+</style>
+
+<script>
+
+
+//포스팅 입력값 저장        
+$(document).ready(function() {
+    let userIdKeyValue = "작성자"
+    let userPWKeyValue = "1234"
+    localStorage.setItem("userId",userIdKeyValue);
+    localStorage.setItem("password",userPWKeyValue);
+    console.log(localStorage.getItem("userId"),localStorage.setItem("password"))
+        });
+
+//  function save() {
+//             $.ajax({
+//                 type: 'POST',
+//                 url:"/posts/chair/add",
+//                 contentType:"application/json",
+//                 data:JSON.stringify({
+//                     itemName: $('#itemName').val(),
+//                     content: $('#content').val(),
+//                     imageUrl: $('#imageUrl').val(),
+//                     category: $('#category').val(),
+//                     writer: localStorage.getItem("userId")
+//                     }),
+                    
+//                 success: (response) => {
+//                     alert("데이터 전송이 완료되었습니다!");
+//                 }
+                
+//             });
+//             console.log(
+//                     $('#itemName').val(),
+//                     $('#content').val(),
+//                     $('#imageUrl').val(),
+//                     $('#category').val()) 
+//         }
+
+function close_box() {
+    console.log(window.document);
+        }     
+
+
+
+function callList() {
+    const category = location.pathname.split('/')[1]
+    console.log(category)
+    $.ajax({
+        type: 'GET',
+        url: `/posts/${category}`,
+        data:{},
+        success: function(response) {
+            console.log(response)
+            let rows = response['Posts']
+            for (let i = 0; i < rows.length; i++) {
+                let postId = rows[i]['postId']
+                let itemName = rows[i]['itemName']
+                let writer = rows[i]['writer']
+                let content = rows[i]['content']
+                let createdAt = rows[i]['createdAt']
+                let imageUrl = rows[i]['imageUrl']
+                let likeCnt = rows[i]['likeCnt']
+                let commentCnt = rows[i]['commentCnt']
+                
+    let temp_html = `<div class="item_list">
+        
+        <button type="button" onclick= location.href="/${category}/${postId}" class="btn btn-link">${itemName}</button>
+        <p>${writer}</p>     
+        <p>${content}</p>
+        <p>${createdAt}</p> 
+        <p>${imageUrl}</p> 
+        <p>${likeCnt}</p> 
+        <p>${commentCnt}</p> 
+        <button onclick="deletePosting()">delete</button>
+            
+        </div>`         
+
+    $('#items_lists').append(temp_html)
+
+
+};
+        }
+});
+};
+
+function deletePosting(){
+    let postNumber = location.pathname.split('/')[1]
+    console.log(postNumber)
+        $.ajax({
+        type: 'delete',
+        url: `/posts/delete/${postNumber}`,
+        data:{password: localStorage.getItem("password")},
+        success: function (response) {
+            if (response['result'] == 'success') {
+                        alert('게시글이 삭제되었습니다')
+                        window.location.href = '/'
+                    }else{
+                        alert('게시글은 작성자만 삭제 가능합니다')
+                }
+            }
+    })
+
+    };
+
+function editPosting(){
+    let postNumber = location.pathname.split('/')[1]
+    console.log(postNumber)
+        $.ajax({
+        type: 'post',
+        url: `/posts/edit/${postNumber}`,
+        data:{password: localStorage.getItem("password")},
+        success: function (response) {
+            if (response['result'] == 'success') {
+                        alert('게시글이 삭제되었습니다')
+                        window.location.href = '/'
+                    }else{
+                        alert('게시글은 작성자만 삭제 가능합니다')
+                }
+            }
+    })
+
+    };
+
+
+function editData() {
+    const category = location.pathname.split('/')[1]
+    let content = $('#content').val();
+    $.ajax({
+        type: 'post',
+        url: `/posts/editdata/${postNumber}`,
+        contentType:"application/json",
+        data:JSON.stringify({content}),
+        success: (response) => {
+                    console.log(response)
+                    alert("게시글 수정이 완료되었습니다!");
+                }
+            });
+
+        }
+  
+
+
+  
+
+</script>
+<body>
+
+    <!-- <div class="category">
+        <div class="logo_box">
+            <img class="logo" src="../static/img/big_logo.jpg" alt="logo" onClick="location.href='/'">
+        </div>
+        <button class="menu_link" onclick="food_move()">식품</button>
+        <button class="menu_link" onclick="life_item_move()">생활용품</button>
+        <button class="menu_link" onclick="home_elec_move()">가전제품</button>
+        <button class="menu_link" onclick="sport_item_move()">스포츠용품</button>
+        <div class="logout"><button type="button" class="btn btn-secondary" onclick="logout()">Logout</button></div>
+    </div> -->
+    <div class="mytitle">
+        <h1><span style="color: blueviolet">나의</span> <span style="color: darkblue">개발템을</span> <span style="color: gold">소개합니다!</span>
+        </h1>
+    </div>
+    <div class="mypost" id="post-box">
+        <div class="form-floating">
+            <textarea class="form-control" placeholder="Leave a comment here" id="itemName"></textarea>
+            <label for="floatingTextarea">itemname</label>
+        </div>
+        <div class="form-floating">
+            <textarea class="form-control" placeholder="Leave a comment here" id="content" style="height: 100px"></textarea>
+            <label for="floatingTextarea2">content</label>
+        </div>
+    
+
+        <div class="form-floating">
+            <textarea id="imageUrl" class="form-control" placeholder="Leave a comment here"></textarea>
+            <label for="floatingTextarea2">imageUrl</label>
+        </div>
+        <div class="form-floating">
+            <textarea id="category" class="form-control" placeholder="Leave a comment here"></textarea>
+            <label for="floatingTextarea2">category</label>
+        </div>
+    
+        <div class="mybtns">
+            <button onclick="save()" type="button" class="btn btn-dark">등록하기</button>
+            <button type="button" class="btn btn-outline-dark">닫기</button>
+        </div>
+    </div>
+    
+    
+    <div  id="items_lists">
+    
+    </div>
+    
+    
+    </body>
+    
+    </html>
+
+              
