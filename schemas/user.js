@@ -1,14 +1,22 @@
 const mongoose = require("mongoose");
-
 const UserSchema = new mongoose.Schema({
-  name: String,
-  nickname: String,
-  password: String,
+  userId: {
+    type: String,
+    required: true,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
+  userNickname: {
+    type: String,
+    required: true,
+  },
+  userAge: {
+    type: String,
+    required: true,
+  },
+  result: Boolean,
 });
-UserSchema.virtual("userId").get(function () {
-  return this._id.toHexString();
-});
-UserSchema.set("toJSON", {
-  virtuals: true,
-});
+
 module.exports = mongoose.model("User", UserSchema);
