@@ -1,6 +1,7 @@
 
 const express = require("express");
 const connect = require("../schemas")
+const moment = require("moment");
 const Comment = require("../schemas/comment")
 const router = express.Router();
 const authMiddleware = require("../middleswares/auth-middleware")
@@ -24,8 +25,7 @@ router.post("/comments/:postId", async (req, res) => {
     // const nickname = "꿀렁"
 
     const { postId } = req.params;
-    const today = new Date();
-    const craetedAt = today.toLocaleString();
+    const createdAt = moment().format("YYYY-MM-DD HH:mm:ss")
 
     const { content, userId, userNickname, userAge } = req.body;//body에 작성된 값을 변수comment에 저장해주고
     if(!content.length) {//만약 comment에 작성된 값이 없으면 '댓글 내용을 입력해주세요'라는 error메세지르 띄워준다
@@ -44,12 +44,12 @@ router.post("/comments/:postId", async (req, res) => {
         const MaxcommentNum = commentSort[0]['commentId']
         var commentId = Number(MaxcommentNum) + 1;
         // console.log(1, commentId)
-        var createdComment = await Comment.create({commentId, content, postId, userId, userNickname, userAge, craetedAt})
+        var createdComment = await Comment.create({commentId, content, postId, userId, userNickname, userAge, createdAt})
         // console.log(craetedAt, postId)
     }else{
         var commentId = 1
         // console.log(2, commentId)
-        var createdComment = await Comment.create({commentId, content, postId, userId, userNickname, userAge, craetedAt})
+        var createdComment = await Comment.create({commentId, content, postId, userId, userNickname, userAge, createdAt})
     }
     // console.log(3, createdComment)
     
