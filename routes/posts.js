@@ -176,5 +176,6 @@ router.get("/mostLikePost", async (req, res) => {
     }
 });
 
+//좋아요가 많은 5개 게시글 OK
 
 module.exports = router;
