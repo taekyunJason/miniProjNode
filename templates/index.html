@@ -116,6 +116,11 @@
                     console.log("로그인에 성공했습니다")
                     alert("환영합니다!")
                     localStorage.setItem("token", response.token);
+                    localStorage.setItem("userId", response.userId);
+                    localStorage.setItem("password", response.password);
+                    localStorage.setItem("userNickname", response.userNickname);
+                    localStorage.setItem("userAge", response.userAge);
+
                     window.location.replace("/main");
 
                     $.ajax({

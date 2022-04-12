@@ -113,7 +113,7 @@ function deletePosting(){
         $.ajax({
         type: 'delete',
         url: `/posts/delete/${postNumber}`,
-        data:{password: localStorage.getItem("password")},
+        data:{userId: localStorage.getItem("userId")},
         success: function (response) {
             if (response['result'] == 'success') {
                         alert('게시글이 삭제되었습니다')
@@ -132,7 +132,7 @@ function editPosting(){
         $.ajax({
         type: 'post',
         url: `/posts/edit/${postNumber}`,
-        data:{password: localStorage.getItem("password")},
+        data:{userId: localStorage.getItem("userId")},
         success: function (response) {
             if (response['result'] == 'success') {
                         alert('게시글이 삭제되었습니다')

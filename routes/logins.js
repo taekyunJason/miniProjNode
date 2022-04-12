@@ -44,16 +44,19 @@ router.post("/login/signUp", async (req, res) => {
 router.post("/login/reqLogin", async (req, res) => {
   const { userId, password } = req.body;
   const user = await User.findOne({ userId, password }).exec();
-
+  const userNickname = user.userId
+  const userAge = user.userAge;
+  console.log(userNickname)
   if (!user) {
     res.status(400).send({
       errorMessage: "입력된 정보가 잘못되었습니다.",
     });
     return;
   }
-
   const token = jwt.sign({ userId: user.userId }, "my-secret-key");
-  res.send({ token });
+  //console.log(user)
+  res.send({token, userId, password,userNickname,userAge});
+  
 });
 
 router.get("/login/isLogin", authMiddleware, (req, res) => {
