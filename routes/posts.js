@@ -167,8 +167,8 @@ router.get("/profile/:userId", (req, res) => {
 
 //가장 좋아요가 많은 5개 게시글 OK
 router.get("/mostLikePost", async (req, res) => {
-    // const postAmount = await Posting.find({});
-    const postAmount = postList
+    const postAmount = await Posting.find({});
+    // const postAmount = postList
     // console.log(postAmount)
 
     if(postAmount.length){
