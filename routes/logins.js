@@ -6,7 +6,7 @@ const crypto = require("crypto");
 const authMiddleware = require("../API_Check/authCheck/authMiddleware");
 const router = express.Router(); //router라는 객체를 새롭게 만듦
 
-router.post("/signUp", async (req, res) => {
+router.post("/login/signUp", async (req, res) => {
   const { userId, password, passwordCheck, userNickname, userAge } = req.body;
   console.log(req.body);
   // const salt = crypto.randomBytes(128).toString("base64");
@@ -41,7 +41,7 @@ router.post("/signUp", async (req, res) => {
 //   // const { userId, userNickname } = req.body;
 // });
 
-router.post("/reqLogin", async (req, res) => {
+router.post("/login/reqLogin", async (req, res) => {
   const { userId, password } = req.body;
   const user = await User.findOne({ userId, password }).exec();
 
@@ -56,16 +56,16 @@ router.post("/reqLogin", async (req, res) => {
   res.send({ token });
 });
 
-router.get("/isLogin", authMiddleware, (req, res) => {
+router.get("/login/isLogin", authMiddleware, (req, res) => {
   console.log(res.locals);
 });
 
-router.get("/getUser", authMiddleware, (req, res) => {
+router.get("/login/getUser", authMiddleware, (req, res) => {
   const { user } = res.locals;
   res.send({ user });
 });
 
-router.get("/logOut", (req, res) => {
+router.get("/login/logOut", (req, res) => {
   localStorage.clear();
   window.location.href = "/";
   console.log("로그아웃 되었습니다.");
