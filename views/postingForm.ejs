@@ -35,30 +35,30 @@ $(document).ready(function() {
     console.log(localStorage.getItem("userId"),localStorage.setItem("password"))
         });
 
-//  function save() {
-//             $.ajax({
-//                 type: 'POST',
-//                 url:"/posts/chair/add",
-//                 contentType:"application/json",
-//                 data:JSON.stringify({
-//                     itemName: $('#itemName').val(),
-//                     content: $('#content').val(),
-//                     imageUrl: $('#imageUrl').val(),
-//                     category: $('#category').val(),
-//                     writer: localStorage.getItem("userId")
-//                     }),
+ function save() {
+            $.ajax({
+                type: 'POST',
+                url:"/posts/chair/add",
+                contentType:"application/json",
+                data:JSON.stringify({
+                    itemName: $('#itemName').val(),
+                    content: $('#content').val(),
+                    imageUrl: $('#imageUrl').val(),
+                    category: $('#category').val(),
+                    writer: localStorage.getItem("userId")
+                    }),
                     
-//                 success: (response) => {
-//                     alert("데이터 전송이 완료되었습니다!");
-//                 }
+                success: (response) => {
+                    alert("데이터 전송이 완료되었습니다!");
+                }
                 
-//             });
-//             console.log(
-//                     $('#itemName').val(),
-//                     $('#content').val(),
-//                     $('#imageUrl').val(),
-//                     $('#category').val()) 
-//         }
+            });
+            console.log(
+                    $('#itemName').val(),
+                    $('#content').val(),
+                    $('#imageUrl').val(),
+                    $('#category').val()) 
+        }
 
 function close_box() {
     console.log(window.document);
@@ -169,16 +169,7 @@ function editData() {
 </script>
 <body>
 
-    <!-- <div class="category">
-        <div class="logo_box">
-            <img class="logo" src="../static/img/big_logo.jpg" alt="logo" onClick="location.href='/'">
-        </div>
-        <button class="menu_link" onclick="food_move()">식품</button>
-        <button class="menu_link" onclick="life_item_move()">생활용품</button>
-        <button class="menu_link" onclick="home_elec_move()">가전제품</button>
-        <button class="menu_link" onclick="sport_item_move()">스포츠용품</button>
-        <div class="logout"><button type="button" class="btn btn-secondary" onclick="logout()">Logout</button></div>
-    </div> -->
+   
     <div class="mytitle">
         <h1><span style="color: blueviolet">나의</span> <span style="color: darkblue">개발템을</span> <span style="color: gold">소개합니다!</span>
         </h1>
