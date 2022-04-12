@@ -17,57 +17,57 @@ router.get("/", (req, res) =>{
 
 //포스팅 입력값 저장-chair
 router.post("/chair/add", async(req, res) => {
-  let { itemName, content, imageUrl, category, writer } = req.body;
+  let { itemName, content, imageUrl, category, userId, userNickname,userAge } = req.body;
   let postNumber = Posting.find({});
   let postId = await postNumber.countDocuments() + 1
   let createdAt = new Date
   let likeCnt = 0
   let commentCnt = 0
-    await Posting.create({ postId:postId, itemName:itemName, writer: writer, content: content, createdAt: createdAt, imageUrl: imageUrl, category: category, likeCnt: likeCnt, commentCnt: commentCnt});
+    await Posting.create({ postId, itemName, content, createdAt, imageUrl, category, likeCnt, commentCnt, userId, userNickname, userAge});
   });
 
   //포스팅 입력값 저장-desk
 router.post("/desk/add", async(req, res) => {
-  let { itemName, content, imageUrl, category, writer } = req.body;
+  let { itemName, content, imageUrl, category, userId, userNickname,userAge } = req.body;
   let postNumber = Posting.find({});
   let postId = await postNumber.countDocuments() + 1
   let createdAt = new Date
   let likeCnt = 0
   let commentCnt = 0
-    await Posting.create({ postId:postId, itemName:itemName, writer: writer, content: content, createdAt: createdAt, imageUrl: imageUrl, category: category, likeCnt: likeCnt, commentCnt: commentCnt});
+    await Posting.create({ postId, itemName, content, createdAt, imageUrl, category, likeCnt, commentCnt, userId, userNickname, userAge});
   });
  
     //포스팅 입력값 저장-elecItem
 router.post("/elecItem/add", async(req, res) => {
-  let { itemName, content, imageUrl, category, writer } = req.body;
+  let { itemName, content, imageUrl, category, userId, userNickname,userAge } = req.body;
   let postNumber = Posting.find({});
   let postId = await postNumber.countDocuments() + 1
   let createdAt = new Date
   let likeCnt = 0
   let commentCnt = 0
-    await Posting.create({ postId:postId, itemName:itemName, writer: writer, content: content, createdAt: createdAt, imageUrl: imageUrl, category: category, likeCnt: likeCnt, commentCnt: commentCnt});
+    await Posting.create({ postId, itemName, content, createdAt, imageUrl, category, likeCnt, commentCnt, userId, userNickname, userAge});
   });
 
       //포스팅 입력값 저장-healthCare
 router.post("/healthCare/add", async(req, res) => {
-  let { itemName, content, imageUrl, category, writer } = req.body;
+  let { itemName, content, imageUrl, category, userId, userNickname,userAge } = req.body;
   let postNumber = Posting.find({});
   let postId = await postNumber.countDocuments() + 1
   let createdAt = new Date
   let likeCnt = 0
   let commentCnt = 0
-    await Posting.create({ postId:postId, itemName:itemName, writer: writer, content: content, createdAt: createdAt, imageUrl: imageUrl, category: category, likeCnt: likeCnt, commentCnt: commentCnt});
+    await Posting.create({ postId, itemName, content, createdAt, imageUrl, category, likeCnt, commentCnt, userId, userNickname, userAge});
   });
 
   //포스팅 입력값 저장-etc
 router.post("/etc/add", async(req, res) => {
-  let { itemName, content, imageUrl, category, writer } = req.body;
+  let { itemName, content, imageUrl, category, userId, userNickname,userAge } = req.body;
   let postNumber = Posting.find({});
   let postId = await postNumber.countDocuments() + 1
   let createdAt = new Date
   let likeCnt = 0
   let commentCnt = 0
-    await Posting.create({ postId:postId, itemName:itemName, writer: writer, content: content, createdAt: createdAt, imageUrl: imageUrl, category: category, likeCnt: likeCnt, commentCnt: commentCnt});
+    await Posting.create({ postId, itemName, content, createdAt, imageUrl, category, likeCnt, commentCnt, userId, userNickname, userAge});
   });
 
 //포스팅 목록 조회

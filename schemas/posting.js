@@ -9,7 +9,15 @@ const PostingSchema = new mongoose.Schema({
         type: String,
         required: true, 
       }, 
-      writer: {
+      userId: {
+        type: String,
+        required: true, 
+      }, 
+      userNickname: {
+        type: String,
+        required: true, 
+      }, 
+      userAge: {
         type: String,
         required: true, 
       }, 

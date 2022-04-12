@@ -29,10 +29,12 @@
 //포스팅 입력값 저장        
 $(document).ready(function() {
     let userIdKeyValue = "작성자"
-    let userPWKeyValue = "1234"
+    let usernickKeyValue = "꿀꿀"
+    let userAgeKeyValue = "10"
     localStorage.setItem("userId",userIdKeyValue);
-    localStorage.setItem("password",userPWKeyValue);
-    console.log(localStorage.getItem("userId",userIdKeyValue))
+    localStorage.setItem("userNickname",usernickKeyValue);
+    localStorage.setItem("userAge",userAgeKeyValue);
+    console.log(localStorage.getItem("userId"))
         });
 
  function save() {
@@ -45,7 +47,9 @@ $(document).ready(function() {
                     content: $('#content').val(),
                     imageUrl: $('#imageUrl').val(),
                     category: $('#category').val(),
-                    writer: localStorage.getItem("userId")
+                    userId: localStorage.getItem("userId"),
+                    userNickname: localStorage.getItem("userNickname"),
+                    userAge: localStorage.getItem("userAge")
                     }),
                     
                 success: (response) => {
@@ -79,7 +83,7 @@ function callList() {
             for (let i = 0; i < rows.length; i++) {
                 let postId = rows[i]['postId']
                 let itemName = rows[i]['itemName']
-                let writer = rows[i]['writer']
+                
                 let content = rows[i]['content']
                 let createdAt = rows[i]['createdAt']
                 let imageUrl = rows[i]['imageUrl']
@@ -89,7 +93,7 @@ function callList() {
     let temp_html = `<div class="item_list">
         
         <button type="button" onclick= location.href="/${category}/${postId}" class="btn btn-link">${itemName}</button>
-        <p>${writer}</p>     
+            
         <p>${content}</p>
         <p>${createdAt}</p> 
         <p>${imageUrl}</p> 
@@ -113,7 +117,7 @@ function deletePosting(){
         $.ajax({
         type: 'delete',
         url: `/posts/delete/${postNumber}`,
-        data:{password: localStorage.getItem("password")},
+        data:{userId: localStorage.getItem("userId")},
         success: function (response) {
             if (response['result'] == 'success') {
                         alert('게시글이 삭제되었습니다')
@@ -132,7 +136,7 @@ function editPosting(){
         $.ajax({
         type: 'post',
         url: `/posts/edit/${postNumber}`,
-        data:{password: localStorage.getItem("password")},
+        data:{userId: localStorage.getItem("userId")},
         success: function (response) {
             if (response['result'] == 'success') {
                         alert('게시글이 삭제되었습니다')
@@ -169,16 +173,7 @@ function editData() {
 </script>
 <body>
 
-    <!-- <div class="category">
-        <div class="logo_box">
-            <img class="logo" src="../static/img/big_logo.jpg" alt="logo" onClick="location.href='/'">
-        </div>
-        <button class="menu_link" onclick="food_move()">식품</button>
-        <button class="menu_link" onclick="life_item_move()">생활용품</button>
-        <button class="menu_link" onclick="home_elec_move()">가전제품</button>
-        <button class="menu_link" onclick="sport_item_move()">스포츠용품</button>
-        <div class="logout"><button type="button" class="btn btn-secondary" onclick="logout()">Logout</button></div>
-    </div> -->
+   
     <div class="mytitle">
         <h1><span style="color: blueviolet">나의</span> <span style="color: darkblue">개발템을</span> <span style="color: gold">소개합니다!</span>
         </h1>
