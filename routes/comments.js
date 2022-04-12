@@ -82,15 +82,19 @@ router.get("/comments/:postId/list", async (req, res) => {
 router.delete("/comments/:commentId", async (req, res) => {
     const commentId = req.params.commentId;
     const { userId } = req.body;
-    const existsComment = await Comment.findOne ({commentId})
+    const existsComment = await Comment.findOne({commentId})
     const DBuserId = existsComment.userId;
+    console.log(DBuserId, userId)
     if (userId === DBuserId) {
+        console.log(Comment.commentId)
+        await Comment.deleteOne({ commentId });
         res.json({result: "success"});
         return;
     }else {
         res.json({ result: "fail"})
     }
 });
+
 
 module.exports = router;
 
