@@ -122,7 +122,7 @@ router.post("/posts/edit/:postId", async (req, res) => {
   const existsPosting = await Posting.findOne({ postId });
   const DBpassword = existsPosting.userId;
   if (userId == DBpassword) {
-    await Posting.deleteOne({ postId });
+
     res.json({ result: "success" });
     return;
   }
