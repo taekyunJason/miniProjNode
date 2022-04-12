@@ -1,11 +1,12 @@
 //express 모듈 불러오기
 const express = require("express");
-
+const cors = require("cors")
 const postRouter = require("./routes/posts")//router폴더 안에 있는 기능을 서버로 가져와서 postRouter변수에 넣어
 const commentRouter = require("./routes/comments")
 const loginRouter = require("./routes/logins");
 const connect = require("./schemas");
 const router = require("./routes/posts");
+
 
 const app = express();
 const port = 3000;
@@ -49,6 +50,13 @@ app.get('/posting', (req, res) => {
   res.render("../views/postingForm");
 });
 
+app.get('/', cors({origin: "*"}), (req, res, next) => {
+  res.sendStatus(200);
+});
+
+app.post('/', cors({origin: "*"}), (req, res, next) => {
+  res.sendStatus(200);
+});
 
 
 //서버 연결
