@@ -6,6 +6,8 @@ const User = require("../schemas/user");
 const jwt = require("jsonwebtoken");
 const { response } = require("express");
 
+
+
 router.use(express.json()); 
 router.use(express.urlencoded( {extended : false } ));
 
@@ -127,5 +129,48 @@ router.post("/editdata/:postId", async(req, res) => {
     res.send("저장이 완료되었습니다!")
   });
 
-module.exports = router;
 
+//   const postList = [{
+//     postId: "1",
+//     itemName: "아무튼 꿀템",
+//     writer: {
+//       userId: "iamuser",
+//       password: "1234",
+//       userNickname: "꿀렁",
+//       userAge: "20대"
+//     },
+//     content: "이거 정말 좋습니다",
+//     createdAt: "2022-04-08 12:00:00",
+//     imageUrl: "https://shopping-phinf.pstatic.net/main_1006654/10066547588.20160715103801.jpg?type=f640",
+//     category: "chair",
+//     likeCnt: 1,
+//     commentCnt: 8
+// }]
+  
+//내가 작성한 게시글 조회  authMiddleware, OK
+router.get("/profile/:userId", (req, res) => {
+    console.log("가나다라")
+    // const post  = await Posting.find({});
+    // res.send("this is post page")
+    res.json({ postList })
+});
+
+
+//가장 좋아요가 많은 5개 게시글 OK
+router.get("/mostLikePost", async (req, res) => {
+    // const postAmount = await Posting.find({});
+    const postAmount = postList
+    // console.log(postAmount)
+
+    if(postAmount.length){
+        const postAmountSort = postAmount.sort((a,b) => b.likeCnt - a.likeCnt);
+        const likeCnt = postAmountSort.splice(0,5);
+        console.log(likeCnt)
+        res.json({likeCnt})
+    }else {
+        return
+    }
+});
+
+
+module.exports = router;

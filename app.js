@@ -1,6 +1,8 @@
 //express 모듈 불러오기
 const express = require("express");
 const mongoose = require("mongoose");
+const postRouter = require("./routes/posts")//router폴더 안에 있는 기능을 서버로 가져와서 postRouter변수에 넣어
+const commentRouter = require("./routes/comments")
 const connect = require("./schemas/index");
 const app = express();
 const express = require('express');
@@ -32,7 +34,7 @@ app.set('view engine', 'ejs');
 app.engine('html', require('ejs').renderFile);
 
 //라우터 연결
-app.use("/", [loginRouter]);
+app.use("/", [loginRouter, postRouter, commentRouter]);
 
 app.get("/", (req, res) => {
   console.log("로그인 화면 입니다.");
@@ -44,7 +46,7 @@ app.get("/main", (req, res) => {
   res.sendFile(__dirname + "/templates/main.html");
 });
 
-app.get('/', (req, res) => {
+app.get('/posting', (req, res) => {
   res.render("../views/postingForm");
 });
 
@@ -56,8 +58,3 @@ app.listen(port, () => {
   console.log(port, "번으로 서버가 켜졌어요!");
 });
 
-// const requestMiddleware = (req, res, next) => {
-//     console.log("클라이언트 입력 주소:", req.originalUrl, "-", new Date())
-//     next();
-//   }
-// app.use(requestMiddleware);

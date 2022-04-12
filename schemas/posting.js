@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
 
 const PostingSchema = new mongoose.Schema({
-       postId: {
-         type: Number,
-         required: true,
-       }, 
+      postId: {
+        type: String,
+        required: true,
+      }, 
       itemName: {
         type: String,
         required: true, 
