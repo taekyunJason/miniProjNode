@@ -76,7 +76,7 @@
 
             $.ajax({
                 type: "POST",
-                url: "/signUp",
+                url: "/login/signUp",
                 contentType: "application/json",
                 data: JSON.stringify({
                     userNickname: $("#inputNickname").val(),
@@ -107,7 +107,7 @@
 
             $.ajax({
                 type: "POST",
-                url: "/reqLogin",
+                url: "/login/reqLogin",
                 data: {
                     userId: userId,
                     password: password,
@@ -120,7 +120,7 @@
 
                     $.ajax({
                         type: "GET",
-                        url: "/isLogin",
+                        url: "/login/isLogin",
                         data: {},
                         success: function (response) {
                             console.log("사용자인증 미들웨어가 실행되었습니다.")

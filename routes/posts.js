@@ -18,7 +18,7 @@ router.get("/", (req, res) =>{
 })
 
 //포스팅 입력값 저장-chair
-router.post("/chair/add", async(req, res) => {
+router.post("/posts/chair/add", async(req, res) => {
   let { itemName, content, imageUrl, category, writer } = req.body;
   let postNumber = Posting.find({});
   let postId = await postNumber.countDocuments() + 1
@@ -29,7 +29,7 @@ router.post("/chair/add", async(req, res) => {
   });
 
   //포스팅 입력값 저장-desk
-router.post("/desk/add", async(req, res) => {
+router.post("/posts/desk/add", async(req, res) => {
   let { itemName, content, imageUrl, category, writer } = req.body;
   let postNumber = Posting.find({});
   let postId = await postNumber.countDocuments() + 1
@@ -39,8 +39,8 @@ router.post("/desk/add", async(req, res) => {
     await Posting.create({ postId:postId, itemName:itemName, writer: writer, content: content, createdAt: createdAt, imageUrl: imageUrl, category: category, likeCnt: likeCnt, commentCnt: commentCnt});
   });
  
-    //포스팅 입력값 저장-elecItem
-router.post("/elecItem/add", async(req, res) => {
+  //포스팅 입력값 저장-elecItem
+router.post("/posts/elecItem/add", async(req, res) => {
   let { itemName, content, imageUrl, category, writer } = req.body;
   let postNumber = Posting.find({});
   let postId = await postNumber.countDocuments() + 1
@@ -50,8 +50,8 @@ router.post("/elecItem/add", async(req, res) => {
     await Posting.create({ postId:postId, itemName:itemName, writer: writer, content: content, createdAt: createdAt, imageUrl: imageUrl, category: category, likeCnt: likeCnt, commentCnt: commentCnt});
   });
 
-      //포스팅 입력값 저장-healthCare
-router.post("/healthCare/add", async(req, res) => {
+    //포스팅 입력값 저장-healthCare
+router.post("/posts/healthCare/add", async(req, res) => {
   let { itemName, content, imageUrl, category, writer } = req.body;
   let postNumber = Posting.find({});
   let postId = await postNumber.countDocuments() + 1
@@ -62,7 +62,7 @@ router.post("/healthCare/add", async(req, res) => {
   });
 
   //포스팅 입력값 저장-etc
-router.post("/etc/add", async(req, res) => {
+router.post("/posts/etc/add", async(req, res) => {
   let { itemName, content, imageUrl, category, writer } = req.body;
   let postNumber = Posting.find({});
   let postId = await postNumber.countDocuments() + 1
@@ -72,8 +72,8 @@ router.post("/etc/add", async(req, res) => {
     await Posting.create({ postId:postId, itemName:itemName, writer: writer, content: content, createdAt: createdAt, imageUrl: imageUrl, category: category, likeCnt: likeCnt, commentCnt: commentCnt});
   });
 
-//포스팅 목록 조회
-router.get("/:category", async (req, res) => {
+// 포스팅 목록 조회
+router.get("/posts/:category", async (req, res) => {
   const category = req.params.category;
   const postsGroup = { category : category };
 	const Posts = await Posting.find(postsGroup).sort({date: -1});
@@ -82,7 +82,7 @@ router.get("/:category", async (req, res) => {
 
 
 //포스팅 세부 조회  데이터
-router.get("/:category/:postId", async (req, res) => {
+router.get("/posts/:category/:postId", async (req, res) => {
     const postId = req.params.postId;
     const detailOne = await Posting.findOne({postId});
     res.json({ detailOne });    
@@ -90,7 +90,7 @@ router.get("/:category/:postId", async (req, res) => {
 
 
 //포스팅 삭제
-router.delete("/delete/:postId", async (req, res) => {  
+router.delete("/posts/delete/:postId", async (req, res) => {  
   const postId = req.params.postId;
   let { password } = req.body;
   const existsPosting = await Posting.findOne({ postId });
@@ -106,7 +106,7 @@ router.delete("/delete/:postId", async (req, res) => {
 });
 
 //포스팅 수정
-router.post("/edit/:postId", async (req, res) => {  
+router.post("/posts/edit/:postId", async (req, res) => {  
   const postId = req.params.postId;
   let { password } = req.body;
   const existsPosting = await Posting.findOne({ postId });
@@ -122,7 +122,7 @@ router.post("/edit/:postId", async (req, res) => {
 });
 
 //포스팅 수정 값 저장
-router.post("/editdata/:postId", async(req, res) => {
+router.post("/posts/editdata/:postId", async(req, res) => {
   const postId = req.params.postNumber;
   let { content } = req.body;
   await Posting.updateOne({ "postId" : postId },{ $set: req.body})
