@@ -1,7 +1,6 @@
 
 const express = require("express");
 const connect = require("../schemas")
-const Post = require("../schemas/post");
 const Comment = require("../schemas/comment")
 const router = express.Router();
 const authMiddleware = require("../middleswares/auth-middleware")
@@ -24,33 +23,19 @@ router.get("/users/me", async (req, res) => {
     });
   })
 
-
-//내가 작성한 게시글 조회
-router.get("/profile/userId", async (res, req) => {
-    const { postId } = req.params;
-    const [ post ] = await Post.find({});
-});
-
-
-//가장 좋아요가 많은 5개 게시글
-
-
-
-
-//comment 작성 POST
-router.post("/comments/:postId", authMiddleware, async (req, res) => {
+ 
+//comment 작성 POST OK
+router.post("/comments/:postId", async (req, res) => {
     const commentAmount = await Comment.find();
-    //comment id값 생성
-    if(commentAmount.length) {
-        const commentSort = commentAmount.sort((a,b) => b.commentId - a.commentId)
-        const MaxcommentNum = commentSort[0]['commentId']
-        const commentId = MaxcommentNum + 1;
-        const createdComment = await Comment.create({commentId})
-    }else{
-        const commentId = 1
-        const createdComment = await Comment.create({commentId})
-    }
 
+    // const userId = res.locals.user._id;
+    // const nickname = res.locals.user.nickname // locals.user안에 nickname을 찾아오 변수 nickname에 넣어준다
+    const userId = "iamuser"
+    const nickname = "꿀렁"
+
+    const { postId } = req.params;
+    const today = new Date();
+    const craetedAt = today.toLocaleString();
 
     const { content } = req.body;//body에 작성된 값을 변수comment에 저장해주고
     if(!content.length) {//만약 comment에 작성된 값이 없으면 '댓글 내용을 입력해주세요'라는 error메세지르 띄워준다
@@ -59,34 +44,55 @@ router.post("/comments/:postId", authMiddleware, async (req, res) => {
         })
         return;
     }
-    
 
-    const { postid } = req.params;
-    const today = new Date();
-    const date = today.toLocaleString();
-    const userId = res.locals.user._id;
-    const nickname = res.locals.user.nickname // locals.user안에 nickname을 찾아오 변수 nickname에 넣어준다
+    // if(comments.length) {
+    //     return res.json({ success: false, errorMessage: "이미 있는 데이터입니다."})
+    // }
+    //comment id값 생성
+    if(commentAmount.length) {
+        const commentSort = commentAmount.sort((a,b) => b.commentId - a.commentId)
+        const MaxcommentNum = commentSort[0]['commentId']
+        var commentId = Number(MaxcommentNum) + 1;
+        // console.log(1, commentId)
+        var createdComment = await Comment.create({commentId, content, postId, userId, nickname, craetedAt})
+        // console.log(craetedAt, postId)
+    }else{
+        var commentId = 1
+        // console.log(2, commentId)
+        var createdComment = await Comment.create({commentId, content, postId, userId, nickname, craetedAt})
+    }
+    // console.log(3, createdComment)
+    
+    // const comments = await Comment.find({ commentId, content, postId, userId, nickname, craetedAt })
     
     
-    await Comment.create({ content, postid , userId, nickname, date })//제대로 작성이 됐으면 앞에 적힌 정보를 Comment안에 컬렉션에 저장해준다
-    res.json({ msg: '등록완료' })
+    res.json({ createdComment });
 })
 
 
-// comment 삭제 DELETE
-router.delete("/postss/:postid", async (req, res) => {
-    const { id } = req.body;
+//comment 조회 GET  OK 
+router.get("/comments/:postId/list", async (req, res) => {
+    const { postId } = req.params;
+    const commentPostid = await Comment.find({ postId })
+
+    res.json({
+        commentPostid,
+    })
+});
+
+
+// comment 삭제 DELETE  authMiddleware,
+router.delete("/comments/:commentId", async (req, res) => {
+    // const { commentId } = req.body;
+    const  commentId  = "11"
     // console.log(id)
-    const comment = await Comment.findById({commentId}).exec();
+    const comment = await Comment.find({commentId}).exec();
     // console.log(comment)
     await Comment.deleteOne({commentId});
     res.send({})
-
 }); 
 
 
 
-
 module.exports = router;
-
 

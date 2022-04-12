@@ -12,32 +12,41 @@ connect();
 //app.use : 미들웨어를 사용할 때 쓰는 코드
 app.use(express.static("static"));
 app.use(express.json());
-app.use("/api", [postRouter], [commentRouter]);
+app.use("/", [postRouter, commentRouter]);
+
+// app.get("/comments" , (req,res) =>{
+//     res.send('comments')
+// })
+
+// app.get("/", (req, res) => {
+//     res.sendFile(__dirname + "");
+// });
 
 
-app.get("/", (req, res) => {
-    res.sendFile(__dirname + "");
-});
+// app.get("/comments", (req, res) => {
+//     res.sendFile(__dirname + "/static/comment.html");
+// });
 
-app.get("/login", (req, res) => {
-    res.sendFile(__dirname + "/static/login.html");
-});
 
-app.get("/register", (req, res) => {
-    res.sendFile(__dirname + "/static/register.html");
-});
+// app.get("/register", (req, res) => {
+//     res.sendFile(__dirname + "/static/register.html");
+// });
 
-app.get("/write", (req, res) => {
-    res.sendFile(__dirname + "/static/write.html");
-});
 
-app.get("/view", (req, res) => {
-    res.sendFile(__dirname + "/static/view.html");
-});
+// app.get("/write", (req, res) => {
+//     res.sendFile(__dirname + "/static/write.html");
+// });
 
-app.get("/edit", (req, res) => {
-    res.sendFile(__dirname + "/static/edit.html");
-});
+
+// app.get("/view", (req, res) => {
+//     res.sendFile(__dirname + "/static/view.html");
+// });
+
+
+// app.get("/edit", (req, res) => {
+//     res.sendFile(__dirname + "/static/edit.html");
+// });
+
 
 
 // app.get('/', (req, res) => {
