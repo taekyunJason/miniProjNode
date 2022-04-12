@@ -102,10 +102,10 @@ router.get("/posts/:category/:postId", async (req, res) => {
 //포스팅 삭제
 router.delete("/posts/delete/:postId", async (req, res) => {  
   const postId = req.params.postId;
-  let { password } = req.body;
+  let { userId } = req.body;
   const existsPosting = await Posting.findOne({ postId });
-  const DBpassword = existsPosting.password;
-  if (password == DBpassword) {
+  const DBuserId = existsPosting.userId;
+  if (userId == DBuserId) {
     await Posting.deleteOne({ postId });
     res.json({ result: "success" });
     return;
@@ -118,10 +118,10 @@ router.delete("/posts/delete/:postId", async (req, res) => {
 //포스팅 수정
 router.post("/posts/edit/:postId", async (req, res) => {  
   const postId = req.params.postId;
-  let { password } = req.body;
+  let { userId } = req.body;
   const existsPosting = await Posting.findOne({ postId });
-  const DBpassword = existsPosting.password;
-  if (password == DBpassword) {
+  const DBpassword = existsPosting.userId;
+  if (userId == DBpassword) {
     await Posting.deleteOne({ postId });
     res.json({ result: "success" });
     return;
