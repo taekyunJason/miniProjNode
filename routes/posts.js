@@ -70,7 +70,7 @@ router.post("/etc/add", async(req, res) => {
     await Posting.create({ postId:postId, itemName:itemName, writer: writer, content: content, createdAt: createdAt, imageUrl: imageUrl, category: category, likeCnt: likeCnt, commentCnt: commentCnt});
   });
 
-//포스팅 목록 조회-chair
+//포스팅 목록 조회
 router.get("/:category", async (req, res) => {
   const category = req.params.category;
   const postsGroup = { category : category };
