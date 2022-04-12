@@ -10,8 +10,16 @@ const CommentSchema = new mongoose.Schema({
     unique: true,
     required: true
   },
-  writer: {
-    type: Object, 
+  userId: {
+    type: String,
+    required: true
+  },
+  userNickname: {
+    type: String,
+    required: true
+  },
+  userAge: {
+    type: String,
     required: true
   },
   craetedAt: {

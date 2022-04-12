@@ -159,9 +159,9 @@ router.post("/posts/editdata/:postId", async(req, res) => {
 //내가 작성한 게시글 조회  authMiddleware, OK
 router.get("/profile/:userId", (req, res) => {
     console.log("가나다라")
-    // const post  = await Posting.find({});
+    const post  = await Posting.find({});
     // res.send("this is post page")
-    res.json({ postList })
+    res.json({ post })
 });
 
 
