@@ -22,12 +22,13 @@ const requestMiddleware = (req, res, next) => {
 
 
 //미들웨어
-
+app.use(cors());
 app.use("/posts", router);
 app.use(express.json());
 app.use(requestMiddleware);
 app.use(express.urlencoded({extended: false}));
 app.use(express.static("templates"));
+
 
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
@@ -50,13 +51,7 @@ app.get('/posting', (req, res) => {
   res.render("../views/postingForm");
 });
 
-app.get('/', cors({origin: "*"}), (req, res, next) => {
-  res.sendStatus(200);
-});
 
-app.post('/', cors({origin: "*"}), (req, res, next) => {
-  res.sendStatus(200);
-});
 
 
 //서버 연결
