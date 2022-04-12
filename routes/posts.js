@@ -101,12 +101,13 @@ router.delete("/posts/delete/:postId", async (req, res) => {
   let { userId } = req.body;
   const existsPosting = await Posting.findOne({ postId });
   const DBuserId = existsPosting.userId;
+  console.log(DBuserId, userId)
   if (userId == DBuserId) {
     await Posting.deleteOne({ postId });
     res.json({ result: "success" });
     return;
   }
-  else{ res.json({ result: "fail" });
+  else{res.json({ result: "fail" });
 
   }
 });

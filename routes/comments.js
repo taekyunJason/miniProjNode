@@ -80,10 +80,10 @@ router.get("/comments/:postId/list", async (req, res) => {
 // }); 
 
 router.delete("/comments/:commentId", async (req, res) => {
-    const postId = req.params.postId;
+    const commentId = req.params.commentId;
     const { userId } = req.body;
-    const existsPosting = await Comment.findOne ({ postId })
-    const DBuserId = existsPosting.userId;
+    const existsComment = await Comment.findOne ({commentId})
+    const DBuserId = existsComment.userId;
     if (userId === DBuserId) {
         res.json({result: "success"});
         return;
