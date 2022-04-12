@@ -120,8 +120,8 @@ router.post("/posts/edit/:postId", async (req, res) => {
   const postId = req.params.postId;
   let { userId } = req.body;
   const existsPosting = await Posting.findOne({ postId });
-  const DBpassword = existsPosting.userId;
-  if (userId == DBpassword) {
+  const DBuserId = existsPosting.userId;
+  if (userId == DBuserId) {
 
     res.json({ result: "success" });
     return;
