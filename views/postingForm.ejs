@@ -29,12 +29,10 @@
 //포스팅 입력값 저장        
 $(document).ready(function() {
     let userIdKeyValue = "작성자"
-    let usernickKeyValue = "꿀꿀"
-    let userAgeKeyValue = "10"
+    let userPWKeyValue = "1234"
     localStorage.setItem("userId",userIdKeyValue);
-    localStorage.setItem("userNickname",usernickKeyValue);
-    localStorage.setItem("userAge",userAgeKeyValue);
-    console.log(localStorage.getItem("userId"))
+    localStorage.setItem("password",userPWKeyValue);
+    console.log(localStorage.getItem("userId"),localStorage.getItem("password"))
         });
 
  function save() {
@@ -47,9 +45,7 @@ $(document).ready(function() {
                     content: $('#content').val(),
                     imageUrl: $('#imageUrl').val(),
                     category: $('#category').val(),
-                    userId: localStorage.getItem("userId"),
-                    userNickname: localStorage.getItem("userNickname"),
-                    userAge: localStorage.getItem("userAge")
+                    writer: localStorage.getItem("userId")
                     }),
                     
                 success: (response) => {
@@ -83,7 +79,7 @@ function callList() {
             for (let i = 0; i < rows.length; i++) {
                 let postId = rows[i]['postId']
                 let itemName = rows[i]['itemName']
-                
+                let writer = rows[i]['writer']
                 let content = rows[i]['content']
                 let createdAt = rows[i]['createdAt']
                 let imageUrl = rows[i]['imageUrl']
@@ -93,7 +89,7 @@ function callList() {
     let temp_html = `<div class="item_list">
         
         <button type="button" onclick= location.href="/${category}/${postId}" class="btn btn-link">${itemName}</button>
-            
+        <p>${writer}</p>     
         <p>${content}</p>
         <p>${createdAt}</p> 
         <p>${imageUrl}</p> 
@@ -112,7 +108,7 @@ function callList() {
 };
 
 function deletePosting(){
-    let postNumber = location.pathname.split('/')[2]
+    let postNumber = location.pathname.split('/')[1]
     console.log(postNumber)
         $.ajax({
         type: 'delete',
@@ -131,7 +127,7 @@ function deletePosting(){
     };
 
 function editPosting(){
-    let postNumber = location.pathname.split('/')[2]
+    let postNumber = location.pathname.split('/')[1]
     console.log(postNumber)
         $.ajax({
         type: 'post',
@@ -139,8 +135,11 @@ function editPosting(){
         data:{userId: localStorage.getItem("userId")},
         success: function (response) {
             if (response['result'] == 'success') {
+                        alert('게시글이 삭제되었습니다')
                         window.location.href = '/'
-                    }
+                    }else{
+                        alert('게시글은 작성자만 삭제 가능합니다')
+                }
             }
     })
 
@@ -148,7 +147,7 @@ function editPosting(){
 
 
 function editData() {
-    let postNumber = location.pathname.split('/')[2]
+    const category = location.pathname.split('/')[1]
     let content = $('#content').val();
     $.ajax({
         type: 'post',
@@ -162,38 +161,8 @@ function editData() {
             });
 
         }
-
-// function likeCnt() {
-//     let postNumber = location.pathname.split('/')[2]
-//     let content = $('#content').val();
-//     $.ajax({
-//         type: 'post',
-//         url: `/posts/editdata/${postNumber}`,
-//         contentType:"application/json",
-//         data:JSON.stringify({content}),
-//         success: (response) => {
-//                     console.log(response)
-//                     alert("게시글 수정이 완료되었습니다!");
-//                 }
-//             });
-
-//         }        
   
-function likeClick(){
-    let postNumber = location.pathname.split('/')[2]
-    $.ajax({
-        type: 'post',
-        url: `/posts/likeCnt/${postNumber}`,
-        data:{userId: localStorage.getItem("userId")},
-        success: function (response) {
-            if (response['result'] == 'success') {
-                        alert("성공")
-                    }else{
-                        alert("실패")
-                    }
-            }
-    })
-}
+
 
   
 
@@ -228,7 +197,6 @@ function likeClick(){
         <div class="mybtns">
             <button onclick="save()" type="button" class="btn btn-dark">등록하기</button>
             <button type="button" class="btn btn-outline-dark">닫기</button>
-            <button onclick="likeClick()">like</button>
         </div>
     </div>
     
