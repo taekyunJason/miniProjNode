@@ -56,6 +56,10 @@ const PostingSchema = new mongoose.Schema({
       commentCnt: {
         type: Array,
         required: true,
+      },
+      userLike: {
+        type: Array,
+        required: true,
       }
     });
     // PostingSchema.virtual("postId").get(function () {//몽고디비에서 이렇게 사용해라! 라고 만든 것이기 때문에 임의로 변경해서는 안된다

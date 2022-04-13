@@ -2,6 +2,7 @@ const express = require("express");
 const Http = require("http");
 const router = express.Router();
 const Posting = require("../schemas/posting")
+const Comment = require("../schemas/comment")
 const User = require("../schemas/user");
 const jwt = require("jsonwebtoken");
 const { response } = require("express");
@@ -19,60 +20,71 @@ router.get("/", (req, res) =>{
 })
 
 //포스팅 입력값 저장-chair
-router.post("/posts/chair/add", async(req, res) => {
-  let { itemName, content, imageUrl, category, userId, userNickname, userAge } = req.body;
+router.post("/posts/:category/add", async (req, res) => {
+  let {itemName, content, imageUrl, userId, userNickname, userAge } = req.body;
+  let { category } = req.params;
   let postNumber = Posting.find({});
   let postId = await postNumber.countDocuments() + 1
   const createdAt = moment().format("YYYY-MM-DD HH:mm:ss")
+  let userLike = []
   let likeCnt = 0
   let commentCnt = 0
-  const createPosting = await Posting.create({ postId, itemName, userId, userNickname, userAge, content, createdAt, imageUrl, category, likeCnt, commentCnt});
-  res.json({createPosting})
+  const createPosting = await Posting.create({postId, itemName, userId, userNickname, userAge, content, createdAt, imageUrl, category, likeCnt, commentCnt, userLike});
+  res.json({status: 200, createPosting})
+  
   });
 
   //포스팅 입력값 저장-desk
-router.post("/posts/desk/add", async(req, res) => {
-  let {itemName, content, imageUrl, category, userId, userNickname, userAge } = req.body;
-  let postNumber = Posting.find({});
-  let postId = await postNumber.countDocuments() + 1
-  const createdAt = moment().format("YYYY-MM-DD HH:mm:ss")
-  let likeCnt = 0
-  let commentCnt = 0
-    await Posting.create({ postId, itemName, userId, userNickname, userAge, content, createdAt, imageUrl, category, likeCnt, commentCnt});
-  });
+// router.post("/posts/desk/add", async(req, res) => {
+//   let {itemName, content, imageUrl, category, userId, userNickname, userAge } = req.body;
+//   let postNumber = Posting.find({});
+//   let postId = await postNumber.countDocuments() + 1
+//   const createdAt = moment().format("YYYY-MM-DD HH:mm:ss")
+//   let userLike = []
+//   let likeCnt = 0
+//   let commentCnt = 0
+//   const createPosting = await Posting.create({ postId, itemName, userId, userNickname, userAge, content, createdAt, imageUrl, category, likeCnt, commentCnt, userLike});
+//   res.json({createPosting})
+//   });
  
-  //포스팅 입력값 저장-elecItem
-router.post("/posts/elecItem/add", async(req, res) => {
-  let {itemName, content, imageUrl, category, userId, userNickname, userAge } = req.body;
-  let postNumber = Posting.find({});
-  let postId = await postNumber.countDocuments() + 1
-  const createdAt = moment().format("YYYY-MM-DD HH:mm:ss")
-  let likeCnt = 0
-  let commentCnt = 0
-    await Posting.create({ postId, itemName, userId, userNickname, userAge, content, createdAt, imageUrl, category, likeCnt, commentCnt});
-  });
+//   //포스팅 입력값 저장-elecItem
+// router.post("/posts/elecItem/add", async(req, res) => {
+//   let {itemName, content, imageUrl, category, userId, userNickname, userAge } = req.body;
+//   let postNumber = Posting.find({});
+//   let postId = await postNumber.countDocuments() + 1
+//   const createdAt = moment().format("YYYY-MM-DD HH:mm:ss")
+//   let userLike = []
+//   let likeCnt = 0
+//   let commentCnt = 0
+//   const createPosting = await Posting.create({ postId, itemName, userId, userNickname, userAge, content, createdAt, imageUrl, category, likeCnt, commentCnt, userLike});
+//   res.json({createPosting})
+//   });
 
-    //포스팅 입력값 저장-healthCare
-router.post("/posts/healthCare/add", async(req, res) => {
-  let {itemName, content, imageUrl, category, userId, userNickname, userAge } = req.body;
-  let postNumber = Posting.find({});
-  let postId = await postNumber.countDocuments() + 1
-  const createdAt = moment().format("YYYY-MM-DD HH:mm:ss")
-  let likeCnt = 0
-  let commentCnt = 0
-    await Posting.create({ postId, itemName, userId, userNickname, userAge, content, createdAt, imageUrl, category, likeCnt, commentCnt});
-  });
+//     //포스팅 입력값 저장-healthCare
+// router.post("/posts/healthCare/add", async(req, res) => {
+//   let {itemName, content, imageUrl, category, userId, userNickname, userAge } = req.body;
+//   let postNumber = Posting.find({});
+//   let postId = await postNumber.countDocuments() + 1
+//   const createdAt = moment().format("YYYY-MM-DD HH:mm:ss")
+//   let userLike = []
+//   let likeCnt = 0
+//   let commentCnt = 0
+//   const createPosting = await Posting.create({ postId, itemName, userId, userNickname, userAge, content, createdAt, imageUrl, category, likeCnt, commentCnt, userLike});
+//   res.json({createPosting})
+//   });
 
-  //포스팅 입력값 저장-etc
-router.post("/posts/etc/add", async(req, res) => {
-  let { itemName, content, imageUrl, category, userId, userNickname, userAge } = req.body;
-  let postNumber = Posting.find({});
-  let postId = await postNumber.countDocuments() + 1
-  const createdAt = moment().format("YYYY-MM-DD HH:mm:ss")
-  let likeCnt = 0
-  let commentCnt = 0
-    await Posting.create({ postId, itemName, userId, userNickname, userAge, content, createdAt, imageUrl, category, likeCnt, commentCnt});
-  });
+//   //포스팅 입력값 저장-etc
+// router.post("/posts/etc/add", async(req, res) => {
+//   let {itemName, content, imageUrl, category, userId, userNickname, userAge } = req.body;
+//   let postNumber = Posting.find({});
+//   let postId = await postNumber.countDocuments() + 1
+//   const createdAt = moment().format("YYYY-MM-DD HH:mm:ss")
+//   let userLike = []
+//   let likeCnt = 0
+//   let commentCnt = 0
+//   const createPosting = await Posting.create({ postId, itemName, userId, userNickname, userAge, content, createdAt, imageUrl, category, likeCnt, commentCnt, userLike});
+//   res.json({createPosting})
+//   });
 
 // 포스팅 목록 조회
 router.get("/posts/:category", async (req, res) => {
@@ -97,15 +109,82 @@ router.delete("/posts/delete/:postId", async (req, res) => {
   let { userId } = req.body;
   const existsPosting = await Posting.findOne({ postId });
   const DBuserId = existsPosting.userId;
+  console.log(DBuserId, userId)
   if (userId == DBuserId) {
     await Posting.deleteOne({ postId });
     res.json({ result: "success" });
     return;
   }
-  else{ res.json({ result: "fail" });
+  else{res.json({ result: "fail" });
 
   }
 });
+  // const { writerLike } = req.body;
+  // const postId = '5'
+  // const likeCnt = await Posting.findOne({ postId }).exec();
+  // const writerLike = true
+  // if( writerLike === true ) {
+  //   var LikeCnt = likeCnt + 1
+  //   console.log(LikeCnt)
+  // }
+	// res.json({ Posts, LikeCnt });
+
+//Like Count
+router.post('/posts/like', async (req, res) => {
+  const { userId, postId } = req.body;
+  const userPost = await Posting.findOne({postId}).exec();
+  const likeCnt = userPost.userLike.length
+
+  const found = userPost.userLike.find(e => e === userId)
+
+  if(found)  {
+    await userPost.updateOne({$pull:{userLike: userId}})
+    await userPost.updateOne({$set: {likeCnt: likeCnt}})
+  }else {
+    await userPost.updateOne({$push:{userLike: userId}})
+    await userPost.updateOne({$set: {likeCnt: likeCnt}})
+  }
+
+
+  const newuserPost = await Posting.findOne({postId}).exec();
+  const newuserLike = newuserPost.userLike
+
+  newuserPost.likeCnt = newuserPost.userLike.length
+  const newLikecnt = newuserPost.likeCnt
+
+  console.log(newuserLike, newLikecnt)
+  // console.log(likeCnt)
+  res.json({newuserLike, newLikecnt})
+})
+
+//Comment Count
+// router.post('/posts/like', async (req, res) => {
+//   const { postId } = req.body;
+//   const userComment = await Comment.findOne({postId}).exec();
+//   const Comment = userComment.content
+
+//   const found = userPost.userLike.find(e => e === userId)
+
+//   if(found)  {
+//     await userPost.updateOne({$set: {likeCnt: likeCnt}})
+//   }else {
+//     await userPost.updateOne({$set: {likeCnt: likeCnt}})
+//   }
+
+
+//   const newuserPost = await Posting.findOne({postId}).exec();
+//   const newuserLike = newuserPost.userLike
+
+//   newuserPost.likeCnt = newuserPost.userLike.length
+//   const newLikecnt = newuserPost.likeCnt
+
+//   console.log(newuserLike, newLikecnt)
+//   // console.log(likeCnt)
+//   res.json({newuserLike, newLikecnt})
+// })
+
+
+
 
 //포스팅 수정
 router.post("/posts/edit/:postId", async (req, res) => {  
@@ -156,23 +235,6 @@ router.post("/posts/editdata/:postId", async(req, res) => {
 // });
 
 
-//   const postList = [{
-//     postId: "1",
-//     itemName: "아무튼 꿀템",
-//     writer: {
-//       userId: "iamuser",
-//       password: "1234",
-//       userNickname: "꿀렁",
-//       userAge: "20대"
-//     },
-//     content: "이거 정말 좋습니다",
-//     createdAt: "2022-04-08 12:00:00",
-//     imageUrl: "https://shopping-phinf.pstatic.net/main_1006654/10066547588.20160715103801.jpg?type=f640",
-//     category: "chair",
-//     likeCnt: 1,
-//     commentCnt: 8
-// }]
-  
 //내가 작성한 게시글 조회  authMiddleware, OK
 router.get("/profile/:userId", async (req, res) => {
     const post  = await Posting.find({});
@@ -197,5 +259,6 @@ router.get("/mostLikePost", async (req, res) => {
     }
 });
 
+//좋아요가 많은 5개 게시글 OK
 
 module.exports = router;
