@@ -49,7 +49,7 @@ router.post("/comments/:postId", async (req, res) => {
     }else{
         var commentId = 1
         // console.log(2, commentId)
-        var createdComment = await Comment.create({commentId, content, postId, userId, userNickname, userAge, craetedAt})
+        var createdComment = await Comment.create({commentId, content, postId, userId, userNickname, userAge, createdAt})
     }
     // console.log(3, createdComment)
     

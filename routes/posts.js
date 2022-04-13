@@ -21,17 +21,17 @@ router.get("/", (req, res) =>{
 
 //포스팅 입력값 저장-chair
 router.post("/posts/:category/add", async (req, res) => {
-  let {itemName, content, imageUrl, userId, userNickname, userAge } = req.body;
+  let { itemName, content, imageUrl, userId, userNickname, userAge } = req.body;
   let { category } = req.params;
-  let postNumber = Posting.find({});
+  let postNumber =  Posting.find();
+  console.log(postNumber)
   let postId = await postNumber.countDocuments() + 1
   const createdAt = moment().format("YYYY-MM-DD HH:mm:ss")
   let userLike = []
   let likeCnt = 0
   let commentCnt = 0
   const createPosting = await Posting.create({postId, itemName, userId, userNickname, userAge, content, createdAt, imageUrl, category, likeCnt, commentCnt, userLike});
-  res.json({status: 200, createPosting})
-  
+  res.status(200).json({createPosting})
   });
 
   //포스팅 입력값 저장-desk

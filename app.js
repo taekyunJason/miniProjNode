@@ -38,7 +38,6 @@ app.engine('html', require('ejs').renderFile);
 app.use("/", [loginRouter, postRouter, commentRouter]);
 
 app.get("/", (req, res) => {
-  
   res.sendFile(__dirname + "/templates/index.html");
 });
 
