@@ -22,11 +22,12 @@ router.get("/", (req, res) =>{
 router.post("/posts/chair/add", async(req, res) => {
   let { itemName, content, imageUrl, category, userId, userNickname, userAge } = req.body;
   let postNumber = Posting.find({});
+  let userLike = []
   let postId = await postNumber.countDocuments() + 1
   const createdAt = moment().format("YYYY-MM-DD HH:mm:ss")
-  let likeCnt = 0
+  let likeCnt = userLike.length
   let commentCnt = 0
-  const createPosting = await Posting.create({ postId, itemName, userId, userNickname, userAge, content, createdAt, imageUrl, category, likeCnt, commentCnt});
+  const createPosting = await Posting.create({ postId, itemName, userId, userNickname, userAge, content, createdAt, imageUrl, category, likeCnt, commentCnt, userLike});
   res.json({createPosting})
   });
 
@@ -38,7 +39,9 @@ router.post("/posts/desk/add", async(req, res) => {
   const createdAt = moment().format("YYYY-MM-DD HH:mm:ss")
   let likeCnt = 0
   let commentCnt = 0
-    await Posting.create({ postId, itemName, userId, userNickname, userAge, content, createdAt, imageUrl, category, likeCnt, commentCnt});
+  let userLike = []
+  const createPosting = await Posting.create({ postId, itemName, userId, userNickname, userAge, content, createdAt, imageUrl, category, likeCnt, commentCnt, userLike});
+  res.json({createPosting})
   });
  
   //포스팅 입력값 저장-elecItem
@@ -49,7 +52,9 @@ router.post("/posts/elecItem/add", async(req, res) => {
   const createdAt = moment().format("YYYY-MM-DD HH:mm:ss")
   let likeCnt = 0
   let commentCnt = 0
-    await Posting.create({ postId, itemName, userId, userNickname, userAge, content, createdAt, imageUrl, category, likeCnt, commentCnt});
+  let userLike = []
+  const createPosting = await Posting.create({ postId, itemName, userId, userNickname, userAge, content, createdAt, imageUrl, category, likeCnt, commentCnt, userLike});
+  res.json({createPosting})
   });
 
     //포스팅 입력값 저장-healthCare
@@ -60,7 +65,9 @@ router.post("/posts/healthCare/add", async(req, res) => {
   const createdAt = moment().format("YYYY-MM-DD HH:mm:ss")
   let likeCnt = 0
   let commentCnt = 0
-    await Posting.create({ postId, itemName, userId, userNickname, userAge, content, createdAt, imageUrl, category, likeCnt, commentCnt});
+  let userLike = []
+  const createPosting = await Posting.create({ postId, itemName, userId, userNickname, userAge, content, createdAt, imageUrl, category, likeCnt, commentCnt, userLike});
+  res.json({createPosting})
   });
 
   //포스팅 입력값 저장-etc
@@ -71,7 +78,9 @@ router.post("/posts/etc/add", async(req, res) => {
   const createdAt = moment().format("YYYY-MM-DD HH:mm:ss")
   let likeCnt = 0
   let commentCnt = 0
-    await Posting.create({ postId, itemName, userId, userNickname, userAge, content, createdAt, imageUrl, category, likeCnt, commentCnt});
+  let userLike = []
+  const createPosting = await Posting.create({ postId, itemName, userId, userNickname, userAge, content, createdAt, imageUrl, category, likeCnt, commentCnt, userLike});
+  res.json({createPosting})
   });
 
 // 포스팅 목록 조회
@@ -101,15 +110,60 @@ router.delete("/posts/delete/:postId", async (req, res) => {
   let { userId } = req.body;
   const existsPosting = await Posting.findOne({ postId });
   const DBuserId = existsPosting.userId;
+  console.log(DBuserId, userId)
   if (userId == DBuserId) {
     await Posting.deleteOne({ postId });
     res.json({ result: "success" });
     return;
   }
-  else{ res.json({ result: "fail" });
+  else{res.json({ result: "fail" });
 
   }
 });
+  // const { writerLike } = req.body;
+  // const postId = '5'
+  // const likeCnt = await Posting.findOne({ postId }).exec();
+  // const writerLike = true
+  // if( writerLike === true ) {
+  //   var LikeCnt = likeCnt + 1
+  //   console.log(LikeCnt)
+  // }
+	// res.json({ Posts, LikeCnt });
+
+//좋아요기능
+router.post('/posts/like', async (req, res) => {
+  const { userId, postId } = req.body;
+  const userPost = await Posting.findOne({postId}).exec();
+  // console.log(1, myuserId)
+  // console.log(2, userPost.userLike)
+  // console.log(3, myuserId === userPost.userLike[0])
+
+  for (let i = 0; i < userPost.userLike.length+1; i++){
+    if(userId !== userPost.userLike[i]) {
+      var userLikenum = await userPost.updateOne({$push:{userLike: userId}})
+      return res.json({userLikenum})
+    }else if (userId === userPost.userLike[i]){
+      var userLikenum = await userPost.updateOne({$pull:{userLike: userId}})
+      return res.json({userLikenum})
+    }
+  }
+  console.log(userPost.userLike.length)
+
+  function checkLike(userLike){
+    userPost.userLike.filter(a => a !== userId)
+  }
+  userPost.userLike.some(checkLike)
+  
+})
+
+//좋아요 취소
+// router.delete('/posts/like/:postId', async (req, res) => {
+//   const { user } = req.body;
+//   await user.removeLike(req.params.postId)
+//   res.redirect('/posts/:category')
+// })
+
+
 
 //포스팅 수정
 router.post("/posts/edit/:postId", async (req, res) => {  
@@ -176,5 +230,6 @@ router.get("/mostLikePost", async (req, res) => {
     }
 });
 
+//좋아요가 많은 5개 게시글 OK
 
 module.exports = router;
