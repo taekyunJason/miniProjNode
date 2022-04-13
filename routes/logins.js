@@ -46,8 +46,9 @@ router.post("/login/reqLogin", async (req, res) => {
   const user = await User.findOne({ userId, password }).exec();
   const userNickname = user.userNickname
   const userAge = user.userAge;
-  console.log(userNickname)
-  if (!user) {
+  // console.log(userNickname)
+  console.log(user)
+  if (!userId || !password) {
     res.status(400).send({
       errorMessage: "입력된 정보가 잘못되었습니다.",
     });
@@ -56,17 +57,16 @@ router.post("/login/reqLogin", async (req, res) => {
   const token = jwt.sign({ userId: user.userId }, "my-secret-key");
   //console.log(user)
   res.send({token, userId, userNickname,userAge});
-  
 });
 
-router.get("/login/isLogin", authMiddleware, (req, res) => {
-  console.log(res.locals);
-});
+// router.get("/login/isLogin", authMiddleware, (req, res) => {
+//   console.log(res.locals);
+// });
 
-router.get("/login/getUser", authMiddleware, (req, res) => {
-  const { user } = res.locals;
-  res.send({ user });
-});
+// router.get("/login/getUser", authMiddleware, (req, res) => {
+//   const { user } = res.locals;
+//   res.send({ user });
+// });
 
 router.get("/login/logOut", (req, res) => {
   localStorage.clear();

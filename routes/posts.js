@@ -148,17 +148,22 @@ router.get("/profile/:userId", async (req, res) => {
 //가장 좋아요가 많은 5개 게시글 OK
 router.get("/mostLikePost", async (req, res) => {
     const postAmount = await Posting.find({});
+    const { postId } = req.body;
+    const userComment = await Comment.find({postId}).exec();
+    const commentCnt = userComment.length
     // const postAmount = postList
     // console.log(postAmount)
 
     if(postAmount.length){
         const postAmountSort = postAmount.sort((a,b) => b.likeCnt - a.likeCnt);
         const likeCnt = postAmountSort.splice(0,5);
-        console.log(likeCnt)
-        res.json({likeCnt})
+        // console.log(likeCnt)
+        console.log(commentCnt)
+        res.json({likeCnt, commentCnt})
     }else {
         return
     }
+    
 });
 
 //좋아요가 많은 5개 게시글 OK
