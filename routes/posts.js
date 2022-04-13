@@ -22,7 +22,7 @@ router.get("/", (req, res) =>{
 //포스팅 입력값 저장-chair
 router.post("/posts/:category/add", async (req, res) => {
   let {itemName, content, imageUrl, userId, userNickname, userAge } = req.body;
-  let { category } = req.params;
+  let category = req.params.category;
   let postNumber = Posting.find({});
   let postId = await postNumber.countDocuments() + 1
   const createdAt = moment().format("YYYY-MM-DD HH:mm:ss")
