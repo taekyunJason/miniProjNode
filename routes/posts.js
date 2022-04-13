@@ -30,7 +30,7 @@ router.post("/posts/:category/add", async (req, res) => {
   let likeCnt = 0
   let commentCnt = 0
   const createPosting = await Posting.create({postId, itemName, userId, userNickname, userAge, content, createdAt, imageUrl, category, likeCnt, commentCnt, userLike});
-  return res.send({createPosting})
+  res.send({createPosting})
   });
 
   //포스팅 입력값 저장-desk
