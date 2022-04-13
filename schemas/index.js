@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 //mongoose와 DB를 연결
 const connect = () => {
   mongoose.connect(
-    "mongodb://13.209.66.208:27017/miniProjDB",
+    "mongodb://localhost:27017/miniProjDB",
     {
       ignoreUndefined: true,
       useNewUrlParser: true,

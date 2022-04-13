@@ -22,10 +22,10 @@ router.get("/", (req, res) =>{
 router.post("/posts/chair/add", async(req, res) => {
   let { itemName, content, imageUrl, category, userId, userNickname, userAge } = req.body;
   let postNumber = Posting.find({});
-  let userLike = []
   let postId = await postNumber.countDocuments() + 1
   const createdAt = moment().format("YYYY-MM-DD HH:mm:ss")
-  let likeCnt = userLike.length
+  let userLike = []
+  let likeCnt = 0
   let commentCnt = 0
   const createPosting = await Posting.create({ postId, itemName, userId, userNickname, userAge, content, createdAt, imageUrl, category, likeCnt, commentCnt, userLike});
   res.json({createPosting})
@@ -37,9 +37,9 @@ router.post("/posts/desk/add", async(req, res) => {
   let postNumber = Posting.find({});
   let postId = await postNumber.countDocuments() + 1
   const createdAt = moment().format("YYYY-MM-DD HH:mm:ss")
+  let userLike = []
   let likeCnt = 0
   let commentCnt = 0
-  let userLike = []
   const createPosting = await Posting.create({ postId, itemName, userId, userNickname, userAge, content, createdAt, imageUrl, category, likeCnt, commentCnt, userLike});
   res.json({createPosting})
   });
@@ -50,9 +50,9 @@ router.post("/posts/elecItem/add", async(req, res) => {
   let postNumber = Posting.find({});
   let postId = await postNumber.countDocuments() + 1
   const createdAt = moment().format("YYYY-MM-DD HH:mm:ss")
+  let userLike = []
   let likeCnt = 0
   let commentCnt = 0
-  let userLike = []
   const createPosting = await Posting.create({ postId, itemName, userId, userNickname, userAge, content, createdAt, imageUrl, category, likeCnt, commentCnt, userLike});
   res.json({createPosting})
   });
@@ -63,9 +63,9 @@ router.post("/posts/healthCare/add", async(req, res) => {
   let postNumber = Posting.find({});
   let postId = await postNumber.countDocuments() + 1
   const createdAt = moment().format("YYYY-MM-DD HH:mm:ss")
+  let userLike = []
   let likeCnt = 0
   let commentCnt = 0
-  let userLike = []
   const createPosting = await Posting.create({ postId, itemName, userId, userNickname, userAge, content, createdAt, imageUrl, category, likeCnt, commentCnt, userLike});
   res.json({createPosting})
   });
@@ -76,9 +76,9 @@ router.post("/posts/etc/add", async(req, res) => {
   let postNumber = Posting.find({});
   let postId = await postNumber.countDocuments() + 1
   const createdAt = moment().format("YYYY-MM-DD HH:mm:ss")
+  let userLike = []
   let likeCnt = 0
   let commentCnt = 0
-  let userLike = []
   const createPosting = await Posting.create({ postId, itemName, userId, userNickname, userAge, content, createdAt, imageUrl, category, likeCnt, commentCnt, userLike});
   res.json({createPosting})
   });
@@ -134,34 +134,29 @@ router.delete("/posts/delete/:postId", async (req, res) => {
 router.post('/posts/like', async (req, res) => {
   const { userId, postId } = req.body;
   const userPost = await Posting.findOne({postId}).exec();
-  // console.log(1, myuserId)
-  // console.log(2, userPost.userLike)
-  // console.log(3, myuserId === userPost.userLike[0])
+  const likeCnt = userPost.userLike.length
 
-  for (let i = 0; i < userPost.userLike.length+1; i++){
-    if(userId !== userPost.userLike[i]) {
-      var userLikenum = await userPost.updateOne({$push:{userLike: userId}})
-      return res.json({userLikenum})
-    }else if (userId === userPost.userLike[i]){
-      var userLikenum = await userPost.updateOne({$pull:{userLike: userId}})
-      return res.json({userLikenum})
-    }
-  }
-  console.log(userPost.userLike.length)
+  const found = userPost.userLike.find(e => e === userId)
 
-  function checkLike(userLike){
-    userPost.userLike.filter(a => a !== userId)
+  if(found)  {
+    await userPost.updateOne({$pull:{userLike: userId}})
+    await userPost.updateOne({$set: {likeCnt: likeCnt}})
+  }else {
+    await userPost.updateOne({$push:{userLike: userId}})
+    await userPost.updateOne({$set: {likeCnt: likeCnt}})
   }
-  userPost.userLike.some(checkLike)
-  
+
+
+  const newuserPost = await Posting.findOne({postId}).exec();
+  const newuserLike = newuserPost.userLike
+
+  newuserPost.likeCnt = newuserPost.userLike.length
+  const newLikecnt = newuserPost.likeCnt
+
+  console.log(newuserLike, newLikecnt)
+  // console.log(likeCnt)
+  res.json({newuserLike, newLikecnt})
 })
-
-//좋아요 취소
-// router.delete('/posts/like/:postId', async (req, res) => {
-//   const { user } = req.body;
-//   await user.removeLike(req.params.postId)
-//   res.redirect('/posts/:category')
-// })
 
 
 
