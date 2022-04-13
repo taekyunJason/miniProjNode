@@ -4,9 +4,9 @@ const cors = require("cors")
 const postRouter = require("./routes/posts")//router폴더 안에 있는 기능을 서버로 가져와서 postRouter변수에 넣어
 const commentRouter = require("./routes/comments")
 const loginRouter = require("./routes/logins");
-const connect = require("./schemas");
 const router = require("./routes/posts");
-
+const connect = require("./schemas");
+connect();
 
 const app = express();
 const port = 3000;
@@ -38,17 +38,12 @@ const port = 3000;
 // const router = require("./routes/posts");
 // app.use("/posts", router);
 
-// const port = 3300;
-// http.listen(port, () => {
-//   console.log(port, '포트로 서버가 열렸어요!');
-// });
 
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 app.use(express.static("public"));
 
-const connect = require("./schemas");
-connect();
+
 
 //접속 로그
 const requestMiddleware = (req, res, next) => {

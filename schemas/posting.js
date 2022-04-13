@@ -50,11 +50,11 @@ const PostingSchema = new mongoose.Schema({
         required: true
       },
       likeCnt: {
-        type: Number,
+        type: Array,
         required: true,
       },
       commentCnt: {
-        type: Number,
+        type: Array,
         required: true,
       }
     });

@@ -7,7 +7,7 @@ const router = express.Router();
 const authMiddleware = require("../middleswares/auth-middleware")
 
 
-connect();
+
 
 router.get("/", (req, res) => {
     console.log("미들웨어가 작동합니다.")

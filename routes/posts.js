@@ -130,6 +130,31 @@ router.post("/posts/editdata/:postId", async(req, res) => {
     res.send("저장이 완료되었습니다!")
   });
 
+// //좋아요 값 저장
+// router.post("/posts/likeCntdata/:postId", async(req, res) => {
+//   const postId = req.params.postNumber;
+//   let { likeCnt } = req.body;
+//   await Posting.updateOne({ "postId" : postId },{ $set: req.body})
+//     res.send("저장이 완료되었습니다!")
+//   });
+
+//좋아요 클릭
+// router.post("/posts/likeCnt/:postId", async (req, res) => {  
+//   const postId = req.params.postId;
+//   let { userId } = req.body;
+//   const existsPosting = await Posting.findOne({ postId });
+//   const existslike = existsPosting.findOne({likeCnt : userId});
+//   if (existslike) {
+//     await Posting.updateOne({ "postId" : postId },{ $unset: existslike})
+//     res.json({ result: "cancel" });
+//     return;
+//   }
+//   else{
+//     await Posting.create({ "postId" : postId },{ likeCnt : userId}) 
+//     res.json({ result: "like" });
+//   }
+// });
+
 
 //   const postList = [{
 //     postId: "1",
