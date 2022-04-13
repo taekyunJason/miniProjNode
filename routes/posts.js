@@ -40,6 +40,7 @@ router.get("/posts/:category", async (req, res) => {
   const category = req.params.category;
   const postsGroup = { category : category };
 	const Posts = await Posting.find(postsGroup).sort({createdAt: -1});
+  const commentCnt = await Comment.find(postId)
   
 	res.json({ Posts });
   });
@@ -148,9 +149,6 @@ router.get("/profile/:userId", async (req, res) => {
 //가장 좋아요가 많은 5개 게시글 OK
 router.get("/mostLikePost", async (req, res) => {
     const postAmount = await Posting.find({});
-    const { postId } = req.body;
-    const userComment = await Comment.find({postId}).exec();
-    const commentCnt = userComment.length
     // const postAmount = postList
     // console.log(postAmount)
 
@@ -158,8 +156,7 @@ router.get("/mostLikePost", async (req, res) => {
         const postAmountSort = postAmount.sort((a,b) => b.likeCnt - a.likeCnt);
         const likeCnt = postAmountSort.splice(0,5);
         // console.log(likeCnt)
-        console.log(commentCnt)
-        res.json({likeCnt, commentCnt})
+        res.json({likeCnt})
     }else {
         return
     }
