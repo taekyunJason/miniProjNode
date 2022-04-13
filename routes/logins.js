@@ -46,7 +46,7 @@ router.post("/login/reqLogin", async (req, res) => {
   const user = await User.findOne({ userId, password }).exec();
   console.log(user)
   if (!user) {
-    res.status(400).send({
+    res.status(401).send({
       errorMessage: "아이디 혹은 비밀번호가 잘못되었습니다.",
     });
     return;
