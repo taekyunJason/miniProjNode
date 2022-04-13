@@ -20,7 +20,7 @@ router.get("/", (req, res) =>{
 })
 
 //포스팅 입력값 저장-chair
-router.post("/posts/:category/add", async(req, res) => {
+router.post("/posts/:category/add", async (req, res) => {
   let {itemName, content, imageUrl, userId, userNickname, userAge } = req.body;
   let { category } = req.params;
   let postNumber = Posting.find({});
@@ -29,8 +29,8 @@ router.post("/posts/:category/add", async(req, res) => {
   let userLike = []
   let likeCnt = 0
   let commentCnt = 0
-  const createPosting = await Posting.create({ postId, itemName, userId, userNickname, userAge, content, createdAt, imageUrl, category, likeCnt, commentCnt, userLike});
-  res.json({createPosting})
+  const createPosting = await Posting.create({postId, itemName, userId, userNickname, userAge, content, createdAt, imageUrl, category, likeCnt, commentCnt, userLike});
+  res.send({createPosting})
   });
 
   //포스팅 입력값 저장-desk
@@ -209,7 +209,7 @@ router.post("/posts/editdata/:postId", async(req, res) => {
     res.send("저장이 완료되었습니다!")
   });
 
-  
+
 //내가 작성한 게시글 조회  authMiddleware, OK
 router.get("/profile/:userId", async (req, res) => {
     const post  = await Posting.find({});
