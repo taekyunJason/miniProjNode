@@ -26,11 +26,12 @@ router.post("/posts/:category/add", async (req, res) => {
   let postNumber = Posting.find({});
   let postId = await postNumber.countDocuments() + 1
   const createdAt = moment().format("YYYY-MM-DD HH:mm:ss")
-  let userLike
+  let userLike = []
   let likeCnt = 0
   let commentCnt = 0
   const createPosting = await Posting.create({postId, itemName, userId, userNickname, userAge, content, createdAt, imageUrl, category, likeCnt, commentCnt, userLike});
-  res.send({createPosting})
+  res.json({status: 200, createPosting})
+  
   });
 
   //포스팅 입력값 저장-desk
