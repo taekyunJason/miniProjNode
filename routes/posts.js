@@ -152,9 +152,10 @@ router.get("/mostLikePost", async (req, res) => {
     // console.log(postAmount)
 
     if(postAmount.length){
-        const postAmountSort = postAmount.sort((a,b) => b.likeCnt - a.likeCnt);
+        const postAmountSort = postAmount.sort((a,b) =>  {
+          console.log(b.userLike.length, a.userLike.length)
+          return b.userLike.length - a.userLike.length});
         const likeCnt = postAmountSort.splice(0,5);
-        // console.log(likeCnt)
         res.json({likeCnt})
     }else {
         return
