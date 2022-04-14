@@ -63,7 +63,8 @@ router.post("/comments/:postId", async (req, res) => {
 //comment 조회 GET  OK 
 router.get("/comments/:postId/list", async (req, res) => {
     const { postId } = req.params;
-    const commentPostid = await Comment.find({ postId })
+    const commentPostid = await Comment.find({ postId }).sort({createdAt: -1})
+    console.log(commentPostid)
 
     res.json({
         commentPostid,
