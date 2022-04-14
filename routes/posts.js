@@ -40,7 +40,6 @@ router.get("/posts/:category", async (req, res) => {
   const category = req.params.category;
   const postsGroup = { category : category };
 	const Posts = await Posting.find(postsGroup).sort({createdAt: -1});
-  const commentCnt = await Comment.find(postId)
   
 	res.json({ Posts });
   });
