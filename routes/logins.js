@@ -22,7 +22,8 @@ router.post("/login/signUp", async (req, res) => {
     return;
   }
 
-
+  const existUser = await User.find({
+    $or: [{ userId }, { userNickname }],
   });
   if (existUser.length) {
     res.status(400).send({
